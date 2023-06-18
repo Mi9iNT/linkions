@@ -1,0 +1,328 @@
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (max-width: 480px) {
+    .box-logo{
+        display: flex;
+        justify-content: flex-start;
+        width: 10rem;
+        margin-top: 1rem !important;
+        margin-left: 1rem !important;
+    }
+    .logo {
+        background-image: url("../img/logoMobile.png");
+        width: 5rem !important;
+        height: 5rem !important;
+    }
+    .title-h1{
+        font-size: large !important;
+    }
+    .title-h2{
+        font-size: small !important;
+    }
+
+    .title-h3{
+        font-size: small !important;
+    }
+
+    .title-h4{
+        font-size: small !important;
+    }
+    .top-text{
+        position: relative;
+        top: 10rem !important;
+        width: 80% !important;
+        margin: 0 auto;
+    }
+}
+/* Styles pour les mobiles en mode paysage */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .box-logo{
+        top: 0rem !important;
+        left: 20px !important;
+        width: 10rem;
+        margin-top: 2rem !important;
+        margin-left: 1rem !important;
+    }
+    .logo {
+        background-image: url("../img/logoMobile.png");
+        width: 5rem !important;
+        height: 5rem !important;
+    }
+    .logo:hover {
+        transform: scale(1.1);
+        transition: 0.4s ease-in;
+    }
+    .title-h1{
+        font-size: large !important;
+    }
+    .title-h2{
+        font-size: small !important;
+    }
+
+    .title-h3{
+        font-size: small !important;
+    }
+
+    .title-h4{
+        font-size: small !important;
+    }
+    .top-text{
+        position: relative;
+        top: 8rem !important;
+        width: 80% !important;
+        margin: 0 auto;
+    }
+}
+/* Styles pour les tablettes en mode portrait */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .box-logo{
+        top: -2rem !important;
+        left: 0px !important;
+        width: 10rem;
+        margin-top: 0rem !important;
+        margin-left: 1rem !important;
+    }
+
+    .logo {
+    background-image: url("../img/logoTablet.png");
+    }
+
+    .logo:hover {
+        transform: scale(1.1);
+        transition: 0.4s ease-in;
+    }
+    .title-h1{
+        font-size: x-large !important;
+    }
+    .title-h2{
+        font-size: large !important;
+    }
+
+    .title-h3{
+        font-size: large !important;
+    }
+
+    .title-h4{
+        font-size: large !important;
+    }
+    .top-text{
+        position: relative;
+        top: 2rem !important;
+        width: 80% !important;
+        margin: 0 auto;
+    }
+}
+/* Styles pour les tablettes en mode paysage et ordinateurs portables */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .box-logo{
+        top: -2rem !important;
+        left: -20px !important;
+        width: 10rem;
+        margin-top: 0rem !important;
+        margin-left: 1rem !important;
+    }
+
+    .logo {
+    background-image: url("../img/logoTablet.png");
+    }
+    .logo:hover {
+        transform: scale(1.1);
+        transition: 0.4s ease-in;
+    }
+    .title-h1{
+        font-size: x-large !important;
+    }
+    .title-h2{
+        font-size: large !important;
+    }
+
+    .title-h3{
+        font-size: large !important;
+    }
+
+    .title-h4{
+        font-size: large !important;
+    }
+    .top-text{
+        position: relative;
+        top: 2rem !important;
+        width: 80% !important;
+        margin: 0 auto;
+    }
+}
+/* Styles pour les ordinateurs de bureau */
+@media screen and (min-width: 1440px) and (max-width: 1679px) {
+    .box-logo{
+        top: -2rem;
+        left: -65px !important;
+        margin-top: 0rem !important;
+        margin-left: 1rem !important;
+    }
+
+    .logo {
+    background-image: url("../img/logoDesktop.png");
+    }
+
+    .logo:hover {
+        transform: scale(1.1);
+        transition: 0.4s ease-in;
+    }
+    .title-h1{
+        font-size: x-large !important;
+    }
+    .title-h2{
+        font-size: large !important;
+    }
+
+    .title-h3{
+        font-size: large !important;
+    }
+
+    .title-h4{
+        font-size: large !important;
+    }
+}
+/* Styles pour les grands écrans (ordinateurs de bureau et téléviseurs) */
+@media screen and (min-width: 1680px) {
+    .box-logo{
+        top: -2rem !important;
+        left: -260px !important;
+        margin-top: 0rem !important;
+        margin-left: 1rem !important;
+    }
+
+    .logo {
+    background-image: url("../img/logoDesktop.png");
+    }
+
+    .logo:hover {
+        transform: scale(1.1);
+        transition: 0.4s ease-in;
+    }
+}
+
+/*  Règles Générales*/
+
+body{
+    background: #001007;
+}
+
+.aInfo{
+    color: #FFB400 !important;
+}
+
+
+/*  Messages (flashbags) */
+.alert{
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20rem;
+    min-width: 15rem;
+    max-width: 30rem;  
+    color: white;
+}
+
+.success{
+    background: #184A2D;
+}
+
+.info{
+    background: #0dcaf0;
+    color: black !important;
+}
+
+.warning{
+    background: #8f6608;
+    color: black !important;
+}
+
+.danger{
+    background: #9c0505;
+}
+
+/*  Logo  */
+.box-logo{
+    position: relative;
+    width: 10rem;
+    margin-top: -1rem;
+    margin-left: -5rem;
+}
+
+.logo {
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    transition: 0.4s ease-in;
+}
+
+
+/*  Titres  */
+.title-h1{
+    position: absolute;
+    top: 5rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 2.2rem;
+    color: #FFB400;
+    word-break: break-all;
+
+}
+
+.title-h1:hover{
+    transform: scale(1.1) translate(-50%, -50%);
+    transition: 0.4s ease-in;
+    word-break: keep-all;
+}
+.title-h2{
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #8a9790;
+    position: relative;
+    top: 0rem;
+    word-break: keep-all;
+}
+
+.title-h3{
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 2rem;
+    text-align: center;
+    color: #FFB400;
+    word-break: keep-all;
+}
+
+.title-h4{
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 1rem;
+    text-align: center;
+    color: #FFB400;
+    word-break: keep-all;
+}
+.title-h22{
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 1rem;
+    text-align: left;
+    color: #FFB400;
+    word-break: keep-all;
+}
+.top-text{
+    position: relative;
+    top: 5rem;
+    width: 80% !important;
+    margin: 0 auto;
+}
+.spanBoldYellow{
+    color: #FFB400 !important;
+    font-weight: 600;
+}

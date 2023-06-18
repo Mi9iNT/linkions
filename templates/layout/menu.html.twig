@@ -1,0 +1,146 @@
+<style>
+	.dropup {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 20px;
+		height: 20px;
+		margin: -10px;
+		border: 2px solid #184A2D;
+		border-radius: 50%;
+		background: #FFB400;
+		font-size: 24px;
+		font-weight: 600;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	.dropdown-toggle::after {
+		content: "+" !important;
+	}
+	.dropdown-item {
+		color: #c0f4d7;
+		width: auto !important;
+	}
+	.dropdown-item:hover {
+		background: #001007 !important;
+		color: #FFB400 !important;
+		border-radius: 10px;
+	}
+
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		top: -220;
+		left: -140px;
+		width: auto;
+		padding: 10px;
+		background-color: #184A2D;
+		box-shadow: 0 2px 4px #184A2D;
+	}
+
+	.dropup:hover .dropdown-menu {
+
+		display: grid;
+	}
+
+	.dropdown-menu li {
+		border-bottom: 1px solid #c0f4d7;
+		margin-bottom: 5px;
+	}
+
+	.dropdown-menu li:last-child {
+		border-bottom: none;
+		margin-bottom: 5px;
+	}
+</style>
+<div class="box-login-path fixed-top">
+	{% if is_granted('ROLE_MEMBER') %}
+		<div class="box-avatar-user-path">
+
+			<div class="box-user-logged">
+				<a class="link-avatar-user-path" href="{{ path('app_utilisateur') }}">
+					<div class="border_{{ user.statut }}">
+						{% if user.avatar is empty and user.statut is empty %}
+							<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+						{% elseif user.avatar is empty and user.statut starts with 'e' %}
+							<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+						{% elseif user.avatar is empty and user.statut starts with 's' %}
+							<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+						{% elseif user.avatar is empty and  user.statut starts with 'f' %}
+							<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+						{% elseif user.avatar is not empty and user.statut is not empty %}
+							<img class="avatar-img-top" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+						{% endif %}
+					</div>
+				</a>
+			</div>
+
+			<div class="row" style="top: -1rem; position: relative;">
+				{% if user.username is not empty %}
+					<p class="p-link-user {{user.statut}}">{{ user.username }}</p>
+				{% endif %}
+
+			</div>
+			<div class="box-admin-path">
+				{% if is_granted('ROLE_ADMIN') %}
+					<a class="link-admin-path" href="{{ path('app_admin') }}">
+						<img class="btn-path-admin" src="{{ asset('assets/img/bouton/admin.png') }}" alt="Administration">
+					</a>
+				{% endif %}
+			</div>
+			<div class="box-btn-logout">
+				<a class="link-login-path btn-logout" href="{{ path('app_logout') }}">DECONNEXION</a>
+			</div>
+		</div>
+
+
+	{% else %}
+		<a class="link-register-path btn-yellow-register me-1" href="{{ path('app_register') }}">INSCRIPTION</a>
+
+		<a class="link-login-path btn-yellow-login" href="{{ path('app_login') }}">CONNEXION</a>
+	{% endif %}
+</div>
+
+<footer>
+	<nav class="menu-desk fixed-bottom">
+		<ul class="d-inline-flex justify-content-center">
+			<li style="margin-right:0.3rem;">
+				<a class="menu-first-item un" href="{{ path('app_index') }}">ACCUEIL</a>
+			</li>
+			<li>
+				<a class="menu-next-item deux" href="{{ path('app_membre') }}">MEMBRE</a>
+			</li>
+			<li style="margin-left:0.3rem;">
+				<a class="menu-last-item trois" href="{{ path('app_utilisateur') }}">PROFIL</a>
+			</li>
+			<li class="btn-group dropup">
+				<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+				<ul class="dropdown-menu">
+					<li>
+						<a class="dropdown-item" href="{{ path('app_a_propos') }}">À propos</a>
+
+					</li>
+					<li>
+						<a class="dropdown-item" href="{{ path('app_mentions_legales') }}">Mentions Légales</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="{{ path('app_politique_confidentialite') }}">Politique de Confidentialité</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="{{ path('app_cgu') }}">Condition Générale d'Utilisation</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="{{ path('app_contact_us') }}">Nous contacter</a>
+					</li>
+					{% if user.email is defined and user.email is not empty %}
+						<li>
+							<a class="dropdown-item" href="{{ path('app_utilisateur_send_admin_mail') }}">Contacter un administrateur</a>
+						</li>
+					{% endif %}
+				</ul>
+			</li>
+		</ul>
+	</nav>
+</footer>

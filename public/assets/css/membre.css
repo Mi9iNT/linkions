@@ -1,0 +1,390 @@
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (max-width: 480px) {
+    .selecte {
+        transform: scale(1.2) translateX(1.6rem) !important;
+    }
+    .border-img-card-membre{
+        left: -.5rem !important;
+    }
+    .competences-membres{
+        top: 40px !important;
+        left: -.5rem !important;
+    }
+    .btn-skill{
+        font-size: small;
+        height: 1.4rem !important;
+        padding: 1px !important;
+        margin-left: .2rem !important;
+        margin-right: .2rem !important;
+    }
+    .box-btn-plus-membre{
+        top: 1rem !important;
+        left: -.2rem !important;
+    }
+    .btn-plus-membre{
+        height: 3rem !important;
+        padding: 1px !important;
+    }
+}
+/* Styles pour les mobiles en mode paysage */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .selecte {
+        transform: scale(1.2) translateX(2.6rem) !important;
+    }
+    .border-img-card-membre{
+        left: -.2rem !important;
+    }
+    .competences-membres{
+        top: 40px !important;
+        left: 0rem !important;
+    }
+    .btn-skill{
+        font-size: small;
+        height: 1.4rem !important;
+        padding: 1px !important;
+        margin-left: .2rem !important;
+        margin-right: .2rem !important;
+    }
+    .box-btn-plus-membre{
+        top: .8rem !important;
+        left: .8rem;
+    }
+    .btn-plus-membre{
+        height: 3.2rem !important;
+        padding: 1px !important;
+    }
+}
+/* Styles pour les tablettes en mode portrait */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .selecte {
+        transform: scale(1.2) translateX(3.2rem) !important;
+    }
+    .border-img-card-membre{
+        left: -.2rem !important;
+    }
+    .competences-membres{
+        top: 40px !important;
+        left: 0rem !important;
+    }
+    .btn-skill{
+        font-size: small;
+        height: 1.4rem !important;
+        padding: 1px !important;
+        margin-left: .2rem !important;
+        margin-right: .2rem !important;
+    }
+    .box-btn-plus-membre{
+        top: 0rem !important;
+        left: .8rem;
+    }
+    .btn-plus-membre{
+        height: 3.4rem !important;
+        padding: 1px !important;
+    }
+}
+/* Styles pour les tablettes en mode paysage et ordinateurs portables */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .selecte {
+        transform: scale(1.2) translateX(4.8rem) !important;
+    }
+    .border-img-card-membre{
+        left: -.2rem !important;
+    }
+    .competences-membres{
+        top: 40px !important;
+        left: 0rem !important;
+    }
+    .btn-skill{
+        font-size: medium;
+        height: 1.4rem !important;
+        padding: 1px !important;
+        margin-left: .2rem !important;
+        margin-right: .2rem !important;
+    }
+    .box-btn-plus-membre{
+        top: 0rem !important;
+        left: .8rem;
+    }
+    .btn-plus-membre{
+        height: 3.4rem !important;
+        padding: 1px !important;
+    }
+}
+/* Styles pour les ordinateurs de bureau */
+@media screen and (min-width: 1440px) and (max-width: 1679px) {
+    .selecte {
+        transform: scale(1.2) translateX(5.2rem) !important;
+    }
+    .border-img-card-membre{
+        left: -.2rem !important;
+    }
+    .competences-membres{
+        top: 40px !important;
+        left: 0rem !important;
+    }
+    .btn-skill{
+        font-size: small;
+        height: 1.4rem !important;
+        padding: 1px !important;
+        margin-left: .2rem !important;
+        margin-right: .2rem !important;
+    }
+    .box-btn-plus-membre{
+        top: 0rem !important;
+        left: .8rem;
+    }
+    .btn-plus-membre{
+        height: 3.4rem !important;
+        padding: 1px !important;
+    }
+}
+/* Styles pour les grands écrans (ordinateurs de bureau et téléviseurs) */
+@media screen and (min-width: 1680px) {}
+/*  
+
+Slider Membre  
+
+*/
+.container-membre {
+    width: 80vw;
+    height: 40vh;
+    margin: auto;
+    position: relative;
+    top: 1rem;
+    overflow: hidden;
+    background: #001007;
+}
+
+.cards {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    margin: 0 auto;
+    /* Pour compenser la largeur de la scrollbar */
+    scrollbar-width: none;
+    /* Masquer la scrollbar du navigateur */
+    -ms-overflow-style: none;
+    /* Masquer la scrollbar du navigateur pour Edge et IE */
+}
+
+.cards::-webkit-scrollbar {
+    width: 0;
+    /* Masquer la scrollbar du navigateur pour Chrome, Safari et Opera */
+}
+
+/*  Card Slider Membre */
+.card-membre {
+    position: relative;
+    height: 6rem;
+    width: 80%;
+    margin-bottom: 1rem;
+    color: white;
+    background: #184A2D;
+    padding: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px #184A2D;
+}
+
+.border-img-card-membre{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    top: -.5rem;
+    left: 0rem;
+    border-radius: 50%;
+    background: #001007;
+    padding: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border: solid 3px #184A2D;
+}
+
+.card-membre-infos{
+    top: 0;
+    position: absolute;
+    text-align: center;
+    left: 95px;
+    display: flex;
+    justify-content: space-around;
+    width: 35vw;
+}
+
+.selecte {
+    transform: scale(1.2) translateX(7rem);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px #FFB400;
+    border: 5px solid #FFB400; 
+}
+
+.card-content {
+    display: inline;
+}
+    
+/*  
+
+Boutons Slider Membre  
+
+*/
+.competences-membres{
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: 70%;
+    top: 30px;
+    left: 0rem;
+    position: relative;
+}
+
+.btn-skill{
+    font-family: 'Spline Sans Mono', monospace;
+    background: #FFB400;
+    width: auto;
+    height: 2rem;
+    padding: 2px;
+}
+
+.btn-skill:hover{
+    background: #8f6608;
+    transform: scale(1.2);
+    transition: 0.3s ease-in;
+}
+
+.box-btn-plus-membre{
+    position: relative;
+    top: 0rem;
+    left: 0rem;
+}
+
+.btn-plus-membre{
+    font-family: 'Lato';
+    font-weight: bold;
+    background: #FFB400;
+    width: auto;
+    height: 3.6rem;
+}
+
+.btn-plus-membre:hover{
+    background: #184A2D;
+    border: solid 3px #001007;
+    transform: scale(1.2);
+    transition: 0.3s ease-in;
+}
+
+.btn-contact{
+    font-family: 'Lato';
+    font-weight: bold;
+    background: #FFB400;
+    width: auto;
+    height: auto;
+    padding: 2px;
+    margin: 0 auto;
+}
+
+.btn-contact:hover{
+    font-family: 'Lato';
+    font-weight: 800;
+    background: #8f6608;
+    transform: scale(1.2);
+    transition: 0.3s ease-in;
+}
+/*
+ 
+ScrollBar Slider Membre   
+
+*/
+.scrollbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.scrollbar-arrow {
+    height: 20px;
+    width: 100%;
+    color: #FFB400;
+    cursor: pointer;
+    font-size: 42px;
+}
+
+.up{
+    transform:  translateX(22px) rotate(90deg);
+}
+
+.down{
+    transform: translateX(22px) rotate(90deg);
+}
+
+.scrollbar-arrow:before {
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px;
+    margin: 5px auto;
+}
+
+.scrollbar-arrow.up:before {
+    border-color: transparent transparent white transparent;
+    border-width: 0 5px 5px 5px;
+}
+
+.scrollbar-arrow.down:before {
+    border-color: white transparent transparent transparent;
+    border-width: 5px 5px 0 5px;
+}
+
+.scrollbar-track {
+    height: calc(100% - 40px);
+    width: 20px;
+    margin: 20px 0;
+    left: -5px;
+    position: relative;
+    overflow: hidden; /* Ajoutez cette ligne */
+}
+
+.scrollbar-thumb {
+    width: 100%;
+    background-color: #FFB400;
+    border-radius: 6px;
+    cursor: pointer;
+    position: absolute; /* Remplacez "relative" par "absolute" */
+    z-index: 1;
+}
+
+.scrollbar-thumb.top {
+    top: 0;
+}
+
+.scrollbar-thumb.bottom {
+    bottom: 0;
+}
+
+/*  
+
+Pagination Slider Membre
+
+*/
+.pagination {
+    position: relative;
+    top: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    color: white;
+    background: #184A2D;
+    border: none;
+}
+
+.pagination button.active {
+    background:#FFB400;
+    color: #001007;
+}

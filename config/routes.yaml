@@ -1,5 +1,148 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+
+app_default:
+  path: /
+  controller: 'App\Controller\IndexController::index'
+
+app_index:
+  path: /Accueil
+  controller: 'App\Controller\IndexController::index'
+
+app_visibility_profil:
+  path: /utilisateur/visibilite
+  controller: 'App\Controller\IndexController::visibilityUser'
+  methods: GET|POST
+
+app_utilisateur:
+  path: /utilisateur
+  controller: 'App\Controller\IndexController::utilisateur'
+  methods: GET|POST
+
+app_utilisateur_infos:
+  path: /utilisateur/modifier/informations/{userId}
+  controller: 'App\Controller\IndexController::utilisateurAddInfos'
+  methods: GET|POST
+
+app_utilisateur_competences_infos:
+  path: /utilisateur/modifier/informations/{userId}/competences
+  controller: 'App\Controller\IndexController::utilisateurAddCompetences'
+  methods: GET|POST
+
+app_utilisateur_remove_competence:
+  path: /utilisateur/supprimer/competence/{competenceId}/{userId}
+  controller: 'App\Controller\IndexController::utilisateurRemoveCompetence'
+  methods: GET|POST
+
+app_utilisateur_formation_add:
+  path: /utilisateur/{userName}/ajout/informations/{userId}/formation
+  controller: 'App\Controller\IndexController::utilisateurAddFormation'
+  methods: GET|POST
+
+app_utilisateur_formation_update:
+  path: /utilisateur/{userName}/modifier/informations/{formationId}/formation/{formationTitle}
+  controller: 'App\Controller\IndexController::utilisateurUpdateFormation'
+  methods: GET|POST
+
+app_utilisateur_formation_delete:
+  path: /utilisateur/{userName}/supprimer/informations/{formationId}/formation/{formationTitle}
+  controller: 'App\Controller\IndexController::utilisateurDeleteFormation'
+  methods: GET|POST
+
+app_utilisateur_experience_add:
+  path: /utilisateur/{userName}/ajout/informations/{userId}/experience
+  controller: 'App\Controller\IndexController::utilisateurAddExperience'
+  methods: GET|POST
+
+app_utilisateur_experience_update:
+  path: /utilisateur/{userName}/modifier/informations/{experienceId}/experience/{experienceTitle}
+  controller: 'App\Controller\IndexController::utilisateurUpdateExperience'
+  methods: GET|POST
+
+app_utilisateur_experience_delete:
+  path: /utilisateur/{userName}/supprimer/informations/{experienceId}/experience/{experienceTitle}
+  controller: 'App\Controller\IndexController::utilisateurDeleteExperience'
+  methods: GET|POST
+
+app_membre:
+  path: /membre
+  controller: 'App\Controller\IndexController::rechercher'
+  methods: GET|POST
+
+app_contact_us:
+  path: /nous-contacter
+  controller: 'App\Controller\EmailController::contactUs'
+  methods: GET|POST
+
+app_utilisateur_send_mail:
+  path: /utilisateur/contact/{username}/{userId}
+  controller: 'App\Controller\EmailController::utilisateurSendMail'
+  methods: GET|POST
+
+app_utilisateur_send_admin_mail:
+  path: /utilisateur/contact/administrateur
+  controller: 'App\Controller\EmailController::utilisateurSendAdminMail'
+  methods: GET|POST
+
+app_a_propos:
+  path: /à propos
+  controller: 'App\Controller\IndexController::appApropos'
+  methods: GET|POST
+
+app_cgu:
+  path: /condition-generale-utilisation
+  controller: 'App\Controller\IndexController::appCgu'
+  methods: GET|POST
+
+app_politique_confidentialite:
+  path: /politique-confidentialite
+  controller: 'App\Controller\IndexController::appPolitiqueConfidentialite'
+  methods: GET|POST
+
+app_mentions_legales:
+  path: /mentions-legales
+  controller: 'App\Controller\IndexController::appMentionsLegales'
+  methods: GET|POST
+
+app_admin:
+  path: /administration
+  controller: 'App\Controller\AdminController::adminIndex'
+  methods: GET|POST
+
+app_admin_user_visibility:
+  path: /administration/visibility/{userId}/{userName}/{visibility}
+  controller: 'App\Controller\AdminController::updateAdminVisibility'
+  methods: GET|POST
+
+app_admin_add_admin_role:
+  path: /administration/user/{userId}/{userName}
+  controller: 'App\Controller\AdminController::addAdminRole'
+  methods: GET|POST
+
+app_super_admin_remove_role_admin:
+  path: /administration/{userId}/{userName}/supprimer/role/admin
+  controller: 'App\Controller\SuperAdminController::removeAdminRole'
+  methods: GET|POST
+
+app_deconnexion:
+  path: /deconnexion
+  controller: 'App\Controller\IndexController::deconnexion'
+  methods: GET|POST
+
+app_logout:
+  path: /logout
+  methods: GET|POST
+
+app_error:
+  path: /error
+  controller: 'App\Controller\IndexController::appError'
+  methods: GET|POST
+
+app_error_404:
+  path: /{any}
+  controller: App\Controller\IndexController::appError404
+  requirements:
+    any: ".+"

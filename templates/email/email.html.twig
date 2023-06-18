@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		{% if  sendEmailForm is defined %}
+			<div class="mb-5" style="height:200vh;">
+				<h3 class="title-h2 text-center mb-5">{{ formName }}
+					{% set url = app.request.uri %}
+					{% if '/utilisateur/contact/' in url and username is defined %}
+						<span class="title-h3">
+							{{ username }}
+						</span>
+					{% endif %}
+				</h3>
+				<div class="">
+
+					<section class="my-5" style="height:80rem">
+						{{ form(sendEmailForm) }}
+						</section>
+					</div>
+
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<!-- Page Content -->
+	<!-- End Page Content -->
+{% endblock %}
+{% block javascript %}{% endblock %}

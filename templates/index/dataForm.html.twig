@@ -1,0 +1,410 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+	<style>
+		/* Styles pour les compétences */
+		.input-competences-container {
+			position: relative;
+			top: 0;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			width: 80%;
+			height: 50vh;
+			margin: 0 auto;
+			flex-direction: column;
+		}
+		.competences-container {
+			display: flex;
+			justify-content: center;
+			position: relative;
+			top: -1rem;
+			width: auto;
+			height: auto;
+			margin: 0 auto;
+		}
+
+		.skills-container {
+			position: relative;
+			top: 2rem;
+			width: auto;
+			height: auto;
+			margin: 0 auto;
+		}
+
+		.txt-skills {
+			text-align: center;
+		}
+
+		.skills-saved {
+			display: flex;
+			justify-content: center;
+			position: relative;
+			top: 2rem;
+		}
+
+		.input-competences {
+			position: relative;
+			top: 0;
+			width: 40%;
+			height: 10%;
+			margin: 0 auto;
+		}
+
+		.competence-item {
+			display: flex;
+			align-items: center;
+			background: #FFB400;
+			height: 4vh;
+			padding: 0 0 0 4px;
+			border-radius: 4px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
+
+		.competence-item span {
+			margin-right: 5px;
+		}
+
+		/* Styles pour les boutons de suppression */
+		.competence-item button {
+			background: #9c0505;
+			color: #001007;
+			border: none;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			line-height: 1;
+			font-size: 1.5rem;
+			border-radius: 2px 3px 3px 2px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.competence-item button:hover {
+			background: #FFB400;
+			color: #9c0505;
+		}
+
+		.delete-button {
+			background: #9c0505;
+			color: #001007;
+			border: none;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			line-height: 1;
+			font-size: 1.5rem;
+			border-radius: 2px 3px 3px 2px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.delete-button:hover {
+			background: #FFB400;
+			color: #9c0505;
+		}
+
+		.btn-form-sub {
+			position: relative;
+			top: 3rem;
+			display: flex;
+			justify-content: center;
+			margin: 0 auto;
+			background: #FFB400;
+		}
+	</style>
+
+	<div class="container">
+		{% if skillsForm is defined and userForm is not defined and formationForm is not defined and experienceForm is not defined %}
+			<div class="mb-5" style="height:200vh;">
+
+				<div class="d-flex my-5 justify-content-center mx-auto">
+					{% if user.avatar is empty and user.statut is empty %}
+						<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+					{% elseif user.avatar is empty and user.statut starts with 'e' %}
+						<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+					{% elseif user.avatar is empty and user.statut starts with 's' %}
+						<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+					{% elseif user.avatar is empty and  user.statut starts with 'f' %}
+						<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+					{% elseif user.avatar.avatarName is not empty and user.statut is not empty %}
+						<img class="card-img-top2" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+					{% endif %}
+				</div>
+
+				<h3 class="title-h2 text-center mb-5">{{ skillsFormName }}
+
+					<span class="title-h3">
+						{{ user.username }}
+					</span>
+				</h3>
+				<div class="">
+					<a class="btn btn-yellow-large" title="Modifier les informations de {{ user.username }}" href="{{ path('app_utilisateur_infos', { 'userId' : user.id, 'userName' : user.username } ) }}">MODIFIER INFOS
+					</a>
+
+					<a class="btn btn-yellow-large" title="jouter une formation à l'utilisateur {{user.username}}" href="{{ path('app_utilisateur_formation_add', { 'userId' : user.id, 'userName' : user.username } ) }}">AJOUTER FORMATION</a>
+
+					<a class="btn btn-yellow-large" title="Ajouter une expérience à l'utilisateur {{ user.username }}" href="{{ path('app_utilisateur_experience_add', { 'userId' : user.id, 'userName' : user.username } ) }}">AJOUTER EXPÉRIENCE</a>
+
+					<a class="btn btn-yellow-large" title="Modifier les Compétences de {{ user.username }}" href="{{ path('app_utilisateur' ) }}">REVENIR
+					</a>
+
+					{{ form_start(skillsForm) }}
+					<div class="input-competences-container">
+						{{ form_widget(skillsForm.tags, { 'attr': {'id': 'input-competences', 'class': 'input-competences', 'placeholder': 'Renseigner vos compétences en les séparant avec un \';\' '} }) }}
+						{{ form_row(skillsForm.submit, { 'attr': {'class': 'btn btn-form-sub', 'style': 'margin-top:10px'} }) }}
+					</div>
+					{{ form_end(skillsForm) }}
+					<div id="competences-container" class="competences-container"></div>
+
+					{% if ['skills'] is defined %}
+						<div class="skills-container">
+							<div>
+								<h5 class="txt-skills">Compétence(s) enregistrée(s) :</h5>
+							</div>
+							<div class="skills-saved">
+								{% for skill in user.skills %}
+									{% if ['statut'] is defined %}
+										{% if user.statut starts with 'e' %}
+											<div class="competence-item mx-2 vide-en-recherche">
+												<span>{{ skill.name }}</span>
+												<a class="delete-button" href="{{ path('app_utilisateur_remove_competence', {'competenceId': skill.id, 'userId': user.id}) }}">×</a>
+											</div>
+										{% elseif user.statut starts with 'f' %}
+											<div class="competence-item mx-2 vide-freelance">
+												<span>{{ skill.name }}</span>
+												<a class="delete-button" href="{{ path('app_utilisateur_remove_competence', {'competenceId': skill.id, 'userId': user.id}) }}">×</a>
+											</div>
+										{% else %}
+											<div class="competence-item mx-2 {{ user.statut }}">
+												<span>{{ skill.name }}</span>
+												<a class="delete-button" href="{{ path('app_utilisateur_remove_competence', {'competenceId': skill.id, 'userId': user.id}) }}">×</a>
+											</div>
+										{% endif %}
+
+									{% endif %}
+
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		{% elseif userForm is defined and skillsForm is not defined and formationForm is not defined and experienceForm is not defined and %}
+			<div class="mb-5" style="height:200vh;">
+
+				<div class="d-flex my-5 justify-content-center mx-auto">
+
+					{% if user.avatar is not empty %}
+						<img class="card-img-top2" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+					{% else %}
+						{% if user.statut starts with 'e' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut starts with 's' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut starts with 'f' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut is empty %}
+							<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="avatar utilisateur">
+						{% endif %}
+					{% endif %}
+
+				</div>
+
+
+				<h3 class="title-h2 text-center mb-5">{{ formName }}
+					<span class="title-h3">
+						{{ user.username }}
+					</span>
+				</h3>
+				<div class="">
+					<a class="btn btn-yellow-large" title="Modifier les Compétences de {{ user.username }}" href="{{ path('app_utilisateur_competences_infos', { 'userId' : user.id, 'userName' : user.username } ) }}">MODIFIER COMPETENCES</a>
+
+					<a class="btn btn-yellow-large" title="jouter une formation à l'utilisateur {{user.username}}" href="{{ path('app_utilisateur_formation_add', { 'userId' : user.id, 'userName' : user.username } ) }}">AJOUTER FORMATION</a>
+
+					<a class="btn btn-yellow-large" title="Ajouter une expérience à l'utilisateur {{ user.username }}" href="{{ path('app_utilisateur_experience_add', { 'userId' : user.id, 'userName' : user.username } ) }}">AJOUTER EXPÉRIENCE</a>
+
+					<a class="btn btn-yellow-large" title="Modifier les informations de {{ user.username }}" href="{{ path('app_utilisateur') }}">REVENIR
+					</a>
+
+					<section class="my-5" style="height:80rem">
+						{{ form(userForm) }}
+						</section>
+					</div>
+
+				</div>
+			</div>
+		{% elseif formationForm is defined and skillsForm is not defined and userForm is not defined and experienceForm is not defined %}
+			<div class="mb-5" style="height:200vh;">
+
+				<div class="d-flex my-5 justify-content-center mx-auto">
+
+					{% if user.avatar is not empty %}
+						<img class="card-img-top2" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+					{% else %}
+						{% if user.statut starts with 'e' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut starts with 's' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut starts with 'f' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut is empty %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+					{% endif %}
+
+				</div>
+
+
+				<h3 class="title-h2 text-center mb-5">{{ formationFormName }}
+					<span class="title-h3">
+						{{ user.username }}
+					</span>
+				</h3>
+				<div class="">
+					<a class="btn btn-yellow-large" title="Modifier les informations de {{user.username}}" href="{{ path('app_utilisateur_infos', { 'userId' : user.id, 'userName' : user.username } ) }}">MODIFIER INFOS
+					</a>
+
+					<a class="btn btn-yellow-large" title="Modifier les Compétences de {{ user.username }}" href="{{ path('app_utilisateur_competences_infos', { 'userId' : user.id, 'userName' : user.username } ) }}">MODIFIER COMPETENCES</a>
+
+					<a class="btn btn-yellow-large" title="Ajouter une expérience à l'utilisateur {{ user.username }}" href="{{ path('app_utilisateur_experience_add', { 'userId' : user.id, 'userName' : user.username } ) }}">AJOUTER EXPÉRIENCE</a>
+
+					<a class="btn btn-yellow-large" title="Modifier les informations de {{ user.username }}" href="{{ path('app_utilisateur') }}">REVENIR
+					</a>
+					<section class="my-5" style="height:80rem">
+						{{ form_start(formationForm) }}
+						{{ form_row(formationForm.formation_title) }}
+						{{ form_row(formationForm.formation_centre_name) }}
+						{{ form_row(formationForm.formation_duree) }}
+						{{ form_row(formationForm.formation_date_debut) }}
+						{{ form_row(formationForm.formation_date_fin) }}
+						{{ form_row(formationForm.formation_details) }}
+						{{ form_row(formationForm.formation_validee) }}
+						{{ form_end(formationForm) }}
+
+					</section>
+				</div>
+			</div>
+		{% elseif experienceForm is defined and skillsForm is not defined and userForm is not defined and formationForm is not defined %}
+			<div class="mb-5" style="height:200vh;">
+
+				<div class="d-flex my-5 justify-content-center mx-auto">
+
+					{% if user.avatar is not empty %}
+						<img class="card-img-top2" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+					{% else %}
+						{% if user.statut starts with 'e' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut starts with 's' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut starts with 'f' %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+						{% if user.statut is empty %}
+							<img class="card-img-top" src="{{ asset('assets/img/uploads/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+						{% endif %}
+					{% endif %}
+
+				</div>
+
+
+				<h3 class="title-h2 text-center mb-5">{{ experienceFormName }}
+					<span class="title-h3">
+						{{ user.username }}
+					</span>
+				</h3>
+				<div class="">
+					<a class="btn btn-yellow-large" title="Modifier les informations de {{user.username}}" href="{{ path('app_utilisateur_infos', { 'userId' : user.id, 'userName' : user.username } ) }}">MODIFIER INFOS
+					</a>
+
+					<a class="btn btn-yellow-large" title="Modifier les Compétences de {{ user.username }}" href="{{ path('app_utilisateur_competences_infos', { 'userId' : user.id, 'userName' : user.username } ) }}">MODIFIER COMPETENCES</a>
+
+					<a class="btn btn-yellow-large" title="jouter une formation à l'utilisateur {{user.username}}" href="{{ path('app_utilisateur_formation_add', { 'userId' : user.id, 'userName' : user.username } ) }}">AJOUTER FORMATION</a>
+
+					<a class="btn btn-yellow-large" title="Modifier les informations de {{ user.username }}" href="{{ path('app_utilisateur') }}">REVENIR
+					</a>
+					<section class="my-5" style="height:80rem">
+						{{ form_start(experienceForm) }}
+						{{ form_row(experienceForm.poste_name) }}
+						{{ form_row(experienceForm.tache_realisee) }}
+						{{ form_row(experienceForm.duree_contrat) }}
+						{{ form_row(experienceForm.entreprise_name) }}
+						{{ form_row(experienceForm.entreprise_location) }}
+						{{ form_end(experienceForm) }}
+					</section>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<!-- Page Content -->
+<!-- End Page Content -->
+	<!-- Image of location/map -->
+{% endblock %}
+{% block javascript %}
+	<script>
+		const inputCompetences = document.querySelector('.input-competences');
+const competencesContainer = document.getElementById('competences-container');
+
+inputCompetences.addEventListener('input', function () {
+const competences = inputCompetences.value.trim().split(';');
+
+// Réinitialiser le conteneur des compétences
+competencesContainer.innerHTML = '';
+
+competences.forEach(function (competence) {
+if (competence.trim() !== '') {
+const competenceItem = createCompetenceItem(competence.trim());
+competencesContainer.appendChild(competenceItem);
+}
+});
+});
+
+function createCompetenceItem(competence) {
+const competenceItem = document.createElement('div');
+competenceItem.classList.add('competence-item');
+
+const competenceText = document.createElement('span');
+competenceText.textContent = competence;
+
+const removeButton = document.createElement('button');
+removeButton.innerHTML = '&times;';
+
+competenceItem.appendChild(competenceText);
+competenceItem.appendChild(removeButton);
+
+removeButton.addEventListener('click', function () {
+competenceItem.remove();
+updateInputValue();
+});
+
+return competenceItem;
+}
+
+function updateInputValue() {
+const competences = Array.from(competencesContainer.getElementsByClassName('competence-item')).map(function (competenceItem) {
+return competenceItem.firstChild.textContent;
+});
+
+inputCompetences.value = competences.join(';');
+}
+	</script>
+{% endblock %}

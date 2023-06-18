@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style></style>
+
+{% endblock %}
+
+
+{% block body %}
+
+	<div class="d-flex flex-column mb-3 mt-5 mx-5">
+		<h1 class="title-h1">{{ title }}</h1>
+		<h3 class="title-h2 mb-5">En vigueur au 15/ 6/2023</h3>
+
+		<p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et visiteurs, ci-après l'<span class="spanBoldYellow">"Utilisateur"</span>, du site linkions.fr , ci-après le
+			<span class="spanBoldYellow">"Site"</span>, les présentes mentions légales.</p>
+		<p>La connexion et la navigation sur le Site par l’Utilisateur implique acceptation intégrale et sans réserve des présentes mentions légales.</p>
+		<p>Ces dernières sont accessibles sur le Site à la rubrique
+			<span class="spanBoldYellow">« Mentions légales »</span>.</P>
+
+		<h2 class="title-h22 mt-5">ARTICLE 1 - L'ÉDITEUR</h2>
+
+
+		<p>L’édition et la direction de la publication du Site est assurée par
+			<span class="spanBoldYellow">Clairy Miguel</span>, domiciliée rue du Try 95160, dont l'adresse e-mail est
+			<span class="spanBoldYellow">linkions.contact@linkions.fr</span>.</p>
+
+		<p>ci-après l'<span class="spanBoldYellow">"Editeur"</span>.</p>
+
+		<h2 class="title-h22 mt-5">ARTICLE 2 - L'HÉBERGEUR</h2>
+
+		<p>L'hébergeur du Site est la société
+			<span class="spanBoldYellow">IONOS</span>, dont le siège social est situé au  7 PL DE LA GARE 57200 SARREGUEMINES. , avec le numéro de téléphone :
+			<span class="spanBoldYellow">0970808911</span>
+			+
+			<a href="https://www.ionos.fr/contact?linkId=ct.btn.chat-card.chat-starten#chat" target="_blank">
+				<span class="spanBoldYellow">chat textuel</span>
+			</a>
+			de IONOS
+		</p>
+
+		<h2 class="title-h22 mt-5">ARTICLE 3 - ACCÈS AU SITE</h2>
+
+		<p>Le Site est accessible en tout endroit,
+			<span class="spanBoldYellow">7j/7</span>,
+			<span class="spanBoldYellow">24h/24 sauf cas de force majeure</span>, interruption programmée ou non et pouvant découlant d’une nécessité de maintenance.
+		</p>
+
+		<p>En cas de modification, interruption ou suspension du Site, l'Editeur ne saurait être tenu responsable.</p>
+
+		<h2 class="title-h22 mt-5">ARTICLE 4 - COLLÈCTE DES DONNÉES</h2>
+
+		<p>Le Site assure à l'Utilisateur une collecte et un traitement d'informations personnelles dans le respect de la vie privée conformément à la loi n°78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés.
+		</p>
+
+		<p>En vertu de la loi Informatique et Libertés, en date du 6 janvier 1978, l'Utilisateur dispose d'un droit d'accès, de rectification, de suppression et d'opposition de ses données personnelles. L'Utilisateur exerce ce droit :<br>·         via son
+			<span class="spanBoldYellow">espace personnel</span>
+			;
+		</p>
+
+		<p>Toute utilisation, reproduction, diffusion, commercialisation, modification de toute ou partie de l'application, sans autorisation de l’Editeur est prohibée et pourra entraînée des actions et poursuites judiciaires telles que notamment prévues par le Code de la propriété intellectuelle et le Code civil.</p>
+
+		<p>
+			plus d’informations, se reporter aux CGU du site linkions.fr accessible à la rubrique<a href="{{ path('app_cgu') }}">
+				<span class="spanBoldYellow">"CGU"</span>.
+			</a>
+		</p>
+
+		<p>Pour plus d'informations en matière de protection des données à caractère personnel , se reporter à la Charte en matière de protection des données à caractère personnel du site linkions.fr accessible à la rubrique<a href="{{ path('app_politique_confidentialite') }}">
+				<span class="spanBoldYellow">"Données personnelles"</span>
+			</a>
+		</p>
+
+	</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+	<script></script>
+{% endblock %}

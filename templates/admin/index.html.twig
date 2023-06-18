@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ title }}
+{% endblock %}
+
+
+{% block body %}
+	<style></style>
+
+	<div class="container">
+		<h1 class="title-h1">{{ title }}</h1>
+		{% if is_granted('ROLE_ADMIN') %}
+			<section style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 5rem;">
+
+				{% for membre in users %}
+					<div class="card card-user card-selected text-light" style="width: 24rem;">
+						<div class="row">
+							<div class="border-img-card {{ membre.statut }}2">
+								<div class="col d-flex justify-content-center box-avatar-card">
+									{% if membre.avatar is empty and membre.statut is empty %}
+										<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+									{% elseif membre.avatar is empty and membre.statut starts with 'e' %}
+										<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+									{% elseif membre.avatar is empty and membre.statut starts with 's' %}
+										<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+									{% elseif membre.avatar is empty and  membre.statut starts with 'f' %}
+										<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+									{% elseif membre.avatar is not empty and membre.statut is not empty %}
+										<img class="card-img-top" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+									{% endif %}
+								</div>
+							</div>
+
+							{% if membre.username is not empty %}
+								<h5 class="card-title d-flex justify-content-center text-card">{{ membre.username }}</h5>
+							{% endif %}
+						</div>
+						<div class="card-body">
+							{% if membre.jobTitle is not empty %}
+								<h5 class="card-text d-flex justify-content-center text-card title-h3">{{ membre.jobTitle }}</h5>
+							{% endif %}
+							{% if membre.roles is not empty %}
+								<h5 class="card-text d-flex justify-content-center text-card">{{ membre.roles|join(', ') }}</h5>
+							{% endif %}
+						</div>
+						<div class="box-btn-plus-admin">
+							{% if membre.visibilityProfil is null or membre.visibilityProfil.userVisibility == 'invisible' or membre.visibilityProfil.adminVisibility == 'invisible' %}
+								<a class="btn btn-plus-admin" href="{{ path('app_admin_user_visibility', {'userId': membre.id, 'visibility': 'visible', 'userName': membre.username}) }}">Rendre visible</a>
+							{% elseif membre.visibilityProfil is null or membre.visibilityProfil.userVisibility == 'visible' or membre.visibilityProfil.adminVisibility == 'visible' %}
+								<a class="btn btn-plus-admin" href="{{ path('app_admin_user_visibility', {'userId': membre.id, 'visibility': 'invisible', 'userName': membre.username}) }}">Rendre invisible</a>
+							{% endif %}
+							<a href="{{ path('app_membre_infos', { 'userName' : membre.username, 'userId' : membre.id } ) }}" class="btn btn-plus-admin">Voir plus</a>
+							{% if 'ROLE_ADMIN' not in membre.roles %}
+								<a class="btn btn-plus-admin" href="{{ path('app_admin_add_admin_role', {'userId': membre.id, 'userName': membre.username}) }}">Donner rôle Admin</a>
+							{% endif %}
+							{% if 'ROLE_SUPER_ADMIN' in user.roles and 'ROLE_ADMIN' in membre.roles %}
+								<a class="btn btn-plus-admin" href="{{ path('app_super_admin_remove_role_admin', {'userId': membre.id, 'userName': membre.username}) }}">Enlever rôle Admin</a>
+							{% endif %}
+						</div>
+					</div>
+
+
+				{% endfor %}
+
+			</section>
+		{% endif %}
+	</div>
+{% endblock %}

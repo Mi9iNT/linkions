@@ -1,0 +1,34 @@
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (max-width: 480px) {}
+/* Styles pour les mobiles en mode paysage */
+@media screen and (min-width: 481px) and (max-width: 767px) {}
+/* Styles pour les tablettes en mode portrait */
+@media screen and (min-width: 768px) and (max-width: 1023px) {}
+/* Styles pour les tablettes en mode paysage et ordinateurs portables */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {}
+/* Styles pour les ordinateurs de bureau */
+@media screen and (min-width: 1440px) and (max-width: 1679px) {}
+/* Styles pour les grands écrans (ordinateurs de bureau et téléviseurs) */
+@media screen and (min-width: 1680px) {}
+
+.box-btn-plus-admin{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.btn-plus-admin{
+    background: #FFB400;
+    width: auto;
+    height: auto;
+    max-height: 3rem;
+    margin: .2rem;
+    padding: 0px;
+}
+
+.btn-plus-admin:hover{
+    background: #001007;
+    padding: 2px;
+    transform: scale(1.2);
+    transition: 0.3s ease-in;
+}

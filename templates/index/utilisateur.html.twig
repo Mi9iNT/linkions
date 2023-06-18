@@ -1,0 +1,411 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+	-
+	{{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+	<style>
+		.switch-container {
+			position: relative;
+			top: 9rem;
+			display: flex;
+			justify-content: end;
+		}
+
+		.switch-input {
+			display: none;
+		}
+
+		.switch-slider {
+			display: inline-block;
+			width: 6rem;
+			height: 2rem;
+			background-color: #184A2D;
+			border-radius: 50px;
+			transition: 0.2s;
+			cursor: pointer;
+		}
+
+		.switch-input:checked + .switch-slider {
+			background-color: #ffb30052;
+		}
+
+		.switch-slider::before {
+			content: "";
+			display: block;
+			position: relative;
+			width: 2rem;
+			height: 2rem;
+			background-color: #ffb30052;
+			border-radius: 50%;
+			transition: 0.2s;
+			transform: translateX(4rem);
+		}
+
+		.switch-input:checked + .switch-slider::before {
+			background-color: #FFB400;
+			transform: translateX(0rem);
+		}
+
+		.switch-label {
+			position: relative;
+			top: 3px;
+			margin-left: 10px;
+			vertical-align: middle;
+		}
+	</style>
+
+
+	<!-- Page Content -->
+
+
+	<h1 class="title-h1">{{ title }}</h1>
+
+	<div class="container">
+		{% if user is empty %}
+
+			<h2 class="title-h2 text-center mb-5" aria-label="Vous n'êtes pas connecter">Vous n'êtes pas connecter</h2>
+
+
+			<h2 class="title-h2 text-center mb-5" aria-label="Veuillez vous connecter ou vous inscrire">
+
+				Veuillez vous
+				<a class="title-h3 a-title-h1" href="{{ path('app_login') }}" aria-label="Lien pour se connecter">Connecter</a>
+
+				ou Vous
+				<a class="title-h3 a-title-h1" href="{{ path('app_register') }}" aria-label="Lien pour s'inscrire">Inscrire</a>
+
+			</h2>
+
+			<div class="d-flex justify-content-center">
+
+				<a class="link-register-path btn-yellow-register me-1  mt-5" href="{{ path('app_login') }}" aria-label="Lien pour se connecter">CONNEXION</a>
+
+
+				<a class="link-login-path btn-yellow-login  mt-5" href="{{ path('app_register') }}" aria-label="Lien pour s'inscrire">INSCRIPTION</a>
+
+			</div>
+
+		{% elseif userForm is not defined and user is defined %}
+
+			<h2 class="title-h3 text-center  mt-5 mb-5" aria-label="{{ user.username }}">{{ user.username }}</h2>
+
+			<div class="d-flex my-5 justify-content-center mx-auto">
+				{% if user.avatar is empty and user.statut is empty %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur {{ user.username }}">
+				{% elseif user.avatar is empty and user.statut starts with 'e' %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur {{ user.username }}">
+				{% elseif user.avatar is empty and user.statut starts with 's' %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur {{ user.username }}">
+				{% elseif user.avatar is empty and  user.statut starts with 'f' %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur {{ user.username }}">
+				{% elseif user.avatar.avatarName is not empty and user.statut is not empty %}
+					<img class="card-img-top2" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur {{ user.username }}">
+				{% endif %}
+			</div>
+
+			<div class="row">
+				{% if ['job_title'] is defined %}
+					<h3 class="title-h3 text-center  mb-5" aria-label="{{ user.jobTitle }}">{{ user.jobTitle }}</h3>
+				{% endif %}
+			</div>
+
+			<h3 class="text-center" aria-label="Informations utilisateur">Informations Utilisateur</h3>
+
+			<div class="d-flex justify-content-center mt-5 mb-5">
+
+				{% if user.skills is not empty %}
+					{% for skill in user.skills %}
+						{% if user.statut is not empty %}
+							{% if user.statut starts with 'e' %}
+								<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-plus mx-2 my-5 vide-en-recherche" aria-label="{{ skill.name }}">{{ skill.name }}</a>
+							{% elseif user.statut starts with 'f' %}
+								<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-plus mx-2 my-5 vide-freelance" aria-label="{{ skill.name }}">{{ skill.name }}</a>
+							{% else %}
+								<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-plus mx-2 my-5 {{ user.statut }}" aria-label="{{ skill.name }}">{{ skill.name }}</a>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</div>
+
+			<a class="btn btn-yellow-large" title="Modifier les informations de {{user.username}}" href="{{ path('app_utilisateur_infos', { 'userId' : user.id, 'userName': user.username } ) }}" aria-label="Modifier les informations de {{user.username}}">MODIFIER INFOS</a>
+
+			<a class="btn btn-yellow-large" title="Modifier les Compétences de {{ user.username }}" href="{{ path('app_utilisateur_competences_infos', { 'userId' : user.id, 'userName': user.username } ) }}" aria-label="Modifier les Compétences de {{ user.username }}">MODIFIER COMPETENCES</a>
+
+			<a class="btn btn-yellow-large" title="jouter une formation à l'utilisateur {{user.username}}" href="{{ path('app_utilisateur_formation_add', { 'userId' : user.id, 'userName': user.username } ) }}" aria-label="jouter une formation à l'utilisateur {{user.username}}">AJOUTER FORMATION</a>
+
+			<a class="btn btn-yellow-large" title="Ajouter une expérience à l'utilisateur {{ user.username }}" href="{{ path('app_utilisateur_experience_add', { 'userId' : user.id, 'userName': user.username } ) }}" aria-label="Ajouter une expérience à l'utilisateur {{ user.username }}">AJOUTER EXPÉRIENCE</a>
+
+			<section class="block-info-user mt-5">
+				<h3 class="text-center mb-5 mt-5" aria-label="Informations générales du profil">Informations Générales</h3>
+
+				<table class="table table-dark">
+
+					<tbody>
+						{# {{ dump(user.curriculumVitae) }} #}
+
+						{% if user.curriculumVitae is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4">Curriculum-Vitae :</th>
+								<td class="col-md-6 col-sm-8">
+									<a target="_blank" href="{{ asset('assets/uploads/cv/' ~ user.curriculumVitae.curriculumName) }}" aria-label="Lien vers le Curriculum Vitae">Voir Curriculum Vitae</a>
+								</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.lastname is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4">Nom :</th>
+								<td class="col-md-6 col-sm-8">{{ user.lastname }}</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.firstname is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Prénom">Prénom :</th>
+								<td class="col-md-6 col-sm-8" aria-label="{{ user.firstname }}">{{ user.firstname }}</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+
+						{% if user.localisation is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Localisation">Localisation :</th>
+								<td class="col-md-6 col-sm-8" aria-label="{{ user.localisation }}">{{ user.localisation }}</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.statut is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Statut">Statut :</th>
+
+								{% if user.statut starts with 'e' %}
+									<td class="col-md-6 col-sm-8" aria-label="En Recherche">En Recherche</td>
+								{% endif %}
+								{% if user.statut starts with 's' %}
+									<td class="col-md-6 col-sm-8" aria-label="Salarié">Salarié</td>
+								{% endif %}
+								{% if user.statut starts with 'f' %}
+									<td class="col-md-6 col-sm-8" aria-label="Freelance">Freelance</td>
+								{% endif %}
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.description is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4">Description :</th>
+								<td class="col-md-6 col-sm-8" aria-label="{{ user.description }}">{{ user.description }}</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.jobTitle is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Titre">Titre :</th>
+								<td class="col-md-6 col-sm-8" aria-label="{{ user.jobTitle }}">{{ user.jobTitle }}</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.birthday != null %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Âge">Âge :</th>
+								<td class="col-md-6 col-sm-8" aria-label="{{ year|date('Y') - user.birthday|date('Y') }} ans">{{ year|date('Y') - user.birthday|date('Y') }}
+									ans</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+
+						{% if user.createdAt is not empty %}
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Profil créé le">Profil créé le :</th>
+								<td class="col-md-6 col-sm-8" aria-label="{{ user.createdAt|date('d m Y h:i:s') }}">{{ user.createdAt|date('d m Y h:i:s') }}</td>
+								<td class="col-md-3 col-sm-12"></td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</section>
+
+			<section class="block-formation-user mt-5">
+				{% if user.experiences is not empty%}
+					<h3 class="text-center mb-5" aria-label="Formations utilisateur">Formations Utilisateur</h3>
+				{% else %}
+					<h3 class="text-center mb-5 title-h2" aria-label="Formation de l'utilisateur non renseigner">Formation de l'utilisateur non renseigner</h3>
+
+					<h3 class="text-center mb-5 title-h2">Cliquer
+						<a class="aInfo" title="Ajouter une formation à l'utilisateur {{ user.username }}" href="{{ path('app_utilisateur_formation_add', { 'userId' : user.id, 'userName': user.username } ) }}" aria-label="Ajouter une formation à l'utilisateur {{ user.username }}">ICI</a>
+						pour en ajouter</h3>
+				{% endif %}
+				{% for formation in user.formations %}
+					{# {{ dump(formationUSer) }} #}
+					<table class="table table-dark">
+						<tbody>
+							<tr>
+								<th scope="row" class="col-md-3 col-sm-4" aria-label="Formation {{ formation.formationTitle }}">Formation
+									{% if formation.formationTitle is not empty %}
+										{{ formation.formationTitle }}
+									{% endif %}
+								</th>
+								<td class="col-md-3 col-sm-6 position-relative">
+									<a class="btn btn-yellow-medium position-absolute top-0 end-0 m-3" title="Modifier formation {{ formation.formationTitle }}" href="{{ path('app_utilisateur_formation_update', { 'userName' : user.username, 'formationId' : formation.id, 'formationTitle': formation.formationTitle} ) }}" aria-label="Modifier formation {{ formation.formationTitle }}">Modifier formation</a>
+								</td>
+								<td class="col-md-3 col-sm-6 position-relative">
+									<a class="btn btn-red-medium position-absolute top-0 end-0 m-3" title="Supprimer formation {{ formation.formationTitle }}" href="{{ path('app_utilisateur_formation_delete', { 'userName' : user.username, 'formationId' : formation.id, 'formationTitle': formation.formationTitle} ) }}" aria-label="Supprimer formation {{ formation.formationTitle }}">Supprimer formation</a>
+								</td>
+							</tr>
+							{% if formation.formationTitle is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Titre de la formation">Titre de la formation :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationTitle }}">{{ formation.formationTitle }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if formation.formationCentreName is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Nom du centre de formation">Nom du centre de formation :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationCentreName }}">{{ formation.formationCentreName }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if formation.formationDuree is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Durée de la formation">Durée de la formation :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationDuree }}">{{ formation.formationDuree }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if formation.formationDateDebut is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Date de début">Date de début :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationDateDebut.format('d-m-Y') }}">{{ formation.formationDateDebut.format('d-m-Y') }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if formation.formationDateFin is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Date de fin">Date de fin :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationDateFin.format('d-m-Y') }}">{{ formation.formationDateFin.format('d-m-Y') }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if formation.formationDetails is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Détails de la formation">Détails de la formation :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationDetails }}">{{ formation.formationDetails }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if formation.formationValidee is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Formation validée">Formation validée :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ formation.formationValidee }}">{{ formation.formationValidee }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				{% endfor %}
+			</section>
+			<section class="block-exp-user mt-5 mb-5">
+				{% if user.experiences is not empty %}
+					<h3 class="text-center mb-5" aria-label="Expériences Utilisateur">Expériences Utilisateur</h3>
+				{% else %}
+					<h3 class="text-center mb-5 title-h2" aria-label="Expériences Utilisateur non renseigner<">Expériences Utilisateur non renseigner</h3>
+					<h3 class="text-center mb-5 title-h2">Cliquer
+						<a class="aInfo" title="Ajouter une expérience à l'utilisateur {{ user.username }}" href="{{ path('app_utilisateur_experience_add', { 'userId' : user.id, 'userName': user.username } ) }}" aria-label="Ajouter une expérience à l'utilisateur {{ user.username }}">ICI</a>
+						pour en ajouter</h3>
+				{% endif %}
+
+				{% for experience in user.experiences %}
+					<table class="table table-dark">
+						<tbody>
+							<tr class="row">
+								<th scope="row" class="col-md-4" aria-label="Expérience {% if experience.posteName is not empty %} {{ experience.posteName }}{% endif %} {% if experience.entrepriseName is not empty %} à {{ experience.entrepriseName }}.{% endif %}">Expérience
+									{% if experience.posteName is not empty %}
+										{{ experience.posteName }}
+									{% endif %}
+									{% if experience.entrepriseName is not empty %}
+										à
+										{{ experience.entrepriseName }}.
+									{% endif %}
+								</th>
+								<td class="col-md-4 col-sm-6 position-relative">
+									<a class="btn btn-yellow-medium position-absolute top-0 end-0 m-3" title="Modifier l\'experience {{ experience.posteName }}" href="{{ path('app_utilisateur_experience_update', { 'userName' : user.username, 'experienceId' : experience.id, 'experienceTitle': experience.posteName} ) }}" aria-label="Modifier l\'experience {{ experience.posteName }}">Modifier expérience</a>
+								</td>
+								<td class="col-md-4 col-sm-6 position-relative">
+									<a class="btn btn-red-medium position-absolute top-0 end-0 m-3" title="Supprimer experience {{ experience.posteName }}" href="{{ path('app_utilisateur_experience_delete', { 'userName' : user.username, 'experienceId' : experience.id, 'experienceTitle': experience.posteName} ) }}" aria-label="Supprimer experience {{ experience.posteName }}">Supprimer expérience</a>
+								</td>
+							</tr>
+
+							{% if experience.posteName is not empty %}
+								<tr>
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Nom du poste">Nom du poste :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ experience.posteName }}">{{ experience.posteName }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if experience.tacheRealisee is not empty %}
+								<tr>
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Tâche réalisée">Tâche(s) réalisée(s) :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ experience.tacheRealisee }}">{{ experience.tacheRealisee }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if experience.dureeContrat is not empty %}
+								<tr>
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Durée du contrat">Durée du contrat :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{% set years = experience.dureeContrat.y %} {% set pluralAn = '' %} {% if years > 1 %} {% set pluralAn = 's' %} {% endif %} {{ years }} an{{ pluralAn }}, {% set months = experience.dureeContrat.m %} {% if months > 1 %} {{ months }} mois {% else %} {{ months }} mois {% endif %}">
+										{% set years = experience.dureeContrat.y %}
+										{% set pluralAn = '' %}
+										{% if years > 1 %}
+											{% set pluralAn = 's' %}
+										{% endif %}
+										{{ years }}
+										an{{ pluralAn }},
+
+										{% set months = experience.dureeContrat.m %}
+										{% if months > 1 %}
+											{{ months }}
+											mois
+										{% else %}
+											{{ months }}
+											mois
+										{% endif %}
+									</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if experience.entrepriseName is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Nom de l'entreprise">Nom de l'entreprise :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ experience.entrepriseName }}">{{ experience.entrepriseName }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+							{% if experience.entrepriseLocation is not empty %}
+								<tr class="row">
+									<th scope="row" class="col-md-3 col-sm-4" aria-label="Localisation de l'entreprise">Localisation de l'entreprise :</th>
+									<td class="col-md-6 col-sm-8" aria-label="{{ experience.entrepriseLocation }}">{{ experience.entrepriseLocation }}</td>
+									<td class="col-md-3 col-sm-12"></td>
+								</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				{% endfor %}
+			</section>
+		{% endif %}
+	</div><!-- End Page Content --><!-- Image -->{% endblock %}
+{% block javascript %}
+	<script></script>
+{% endblock %}

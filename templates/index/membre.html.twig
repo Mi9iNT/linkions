@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ title }}
+{% endblock %}
+
+
+{% block body %}
+	<style></style>
+	<!-- Page Content -->
+	<h1 class="title-h1">{{ title }}</h1>
+
+	<div class="mx-auto">
+		<form method="GET" action="{{ path('app_membre') }}" class="search-form">
+			<input type="search" name="search" placeholder="Recherche membre" class="form-control" style="width: 20rem;">
+			<button type="submit" class="btn">
+				<img class="btn-search" src="{{ asset('assets/img/bouton/recherche.png') }}" alt="Rechercher">
+			</button>
+		</form>
+
+	</div>
+
+	<div class="d-flex flex-column mb-3 justify-content-center">
+
+		{% if users is empty %}
+			<h2 class="text-center title-h2">Aucun Membre trouvé</h2>
+
+		{% elseif users is not empty %}
+
+			<div class="container-membre">
+				<div class="scrollbar">
+					<div class="scrollbar-arrow up">&lsaquo;</div>
+					<div class="scrollbar-track">
+						<div class="scrollbar-thumb top"></div>
+					</div>
+					<div class="scrollbar-arrow down">&rsaquo;</div>
+				</div>
+				<div class="cards">
+					{% for user in users %}
+						{% if user.visibilityProfil is not empty %}
+							{% if user.visibilityProfil.adminVisibility == 'visible' or user.visibilityProfil.adminVisibility is null %}
+								<div class="card-membre d-flex flex-row">
+									<div class="border-img-card-membre {{ user.statut }}2">
+										<div class="col box-avatar-card">
+											{% if user.avatar is empty and user.statut is empty %}
+												<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+											{% elseif user.avatar is empty and user.statut starts with 'e' %}
+												<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+											{% elseif user.avatar is empty and user.statut starts with 's' %}
+												<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+											{% elseif user.avatar is empty and  user.statut starts with 'f' %}
+												<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+											{% elseif user.avatar is not empty and user.statut is not empty %}
+												<img class="card-img-top" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+											{% endif %}
+										</div>
+									</div>
+									<div class="card-membre-infos m-2">
+										{% if ['username'] is defined and ['username'] is not empty %}
+											<h3 class="text-center title-h2">{{ user.username }}</h3>
+										{% endif %}
+										{% if ['job_title'] is defined and ['job_title'] is not empty %}
+											<h3 class="text-center title-h4">{{ user.jobTitle }}</h3>
+
+										{% endif %}
+
+										{% if user.statut starts with 'e' %}
+											<h5 class="text-center title-h2">En Recherche</h5>
+										{% endif %}
+										{% if user.statut starts with 's' %}
+
+											<h5 class="text-center title-h2">Salarié</h5>
+										{% endif %}
+										{% if user.statut starts with 'f' %}
+
+											<h5 class="text-center title-h2">Freelance</h5>
+										{% endif %}
+
+
+										{% if ['localisation'] is defined and ['localisation'] is not empty %}
+											<h3 class="card-text text-center title-h2">{{ user.localisation }}</h3>
+
+										{% endif %}
+									</div>
+									<div class="competences-membres">
+										{% if ['skills'] is defined %}
+											{% for skill in user.skills|slice(0, 8) %}
+
+												{% if ['statut'] is defined %}
+													{% if user.statut starts with 'e' %}
+														<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-skill text-center mx-2 vide-en-recherche">{{ skill.name }}</a>
+													{% elseif user.statut starts with 'f' %}
+														<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-skill text-center mx-2 vide-freelance">{{ skill.name }}</a>
+													{% else %}
+														<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-skill text-center mx-2 {{ user.statut }}">{{ skill.name }}</a>
+
+													{% endif %}
+
+												{% endif %}
+
+											{% endfor %}
+										{% endif %}
+									</div>
+									<div class="box-btn-plus-membre">
+										<a href="{{ path('app_membre_infos', { 'userName' : user.username, 'userId' : user.id } ) }}" class="btn btn-plus-membre text-center">Voir plus</a>
+									</div>
+
+
+								</div>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</div>
+
+
+			</div>
+			<div
+				class="pagination"><!-- La pagination sera générée dynamiquement ici -->
+			</div>
+
+		{% endif %}
+
+	</div>
+	<!-- End Page Content -->
+
+
+	<!-- Image -->
+{% endblock %}

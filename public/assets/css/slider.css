@@ -1,0 +1,246 @@
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (max-width: 480px) {
+    .slider {
+        top: 10rem !important;
+    }
+    .card-user{
+        min-width: 16rem;
+        margin: 2.25rem !important;
+    }
+    .prev-btn {
+        left: 25px !important;
+    }
+
+    .next-btn {
+        right: 25px !important;
+    }
+    .dots {
+        top: 39.5rem !important;
+    }
+}
+/* Styles pour les mobiles en mode paysage */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .slider {
+        top: 12rem !important;
+    }
+    .card-user{
+        min-width: 16rem;
+        margin: 2.25rem !important;
+    }
+    .prev-btn {
+        left: 25px !important;
+    }
+
+    .next-btn {
+        right: 25px !important;
+    }
+    .dots {
+        top: 40.5rem !important;
+    }
+}
+/* Styles pour les tablettes en mode portrait */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .slider {
+        top: 5rem !important;
+    }
+    .card-user{
+        min-width: 16rem;
+        margin: 2.25rem !important;
+    }
+    .prev-btn,
+    .next-btn {
+        top: 62% !important;
+    }
+    .prev-btn {
+        left: 25px !important;
+    }
+
+    .next-btn {
+        right: 25px !important;
+    }
+    .dots {
+        top: 41rem !important;
+    }
+}
+/* Styles pour les tablettes en mode paysage et ordinateurs portables */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .slider {
+        top: 5rem !important;
+    }
+    .card-user{
+        min-width: 16rem;
+        margin: 2.25rem !important;
+    }
+    .prev-btn,
+    .next-btn {
+        top: 62% !important;
+    }
+    .prev-btn {
+        left: 25px !important;
+    }
+
+    .next-btn {
+        right: 25px !important;
+    }
+    .dots {
+        top: 41rem !important;
+    }
+}
+/* Styles pour les ordinateurs de bureau */
+@media screen and (min-width: 1440px) and (max-width: 1679px) {
+    .slider {
+        top: 5rem !important;
+    }
+    .card-user{
+        min-width: 16rem;
+        margin: 2.25rem !important;
+    }
+    .prev-btn,
+    .next-btn {
+        top: 62% !important;
+    }
+    .prev-btn {
+        left: 25px !important;
+    }
+
+    .next-btn {
+        right: 25px !important;
+    }
+    .dots {
+    position: absolute;
+        top: 40rem !important;
+    }
+}
+/* Styles pour les grands écrans (ordinateurs de bureau et téléviseurs) */
+@media screen and (min-width: 1680px) {
+     .slider {
+        top: 5rem !important;
+    }
+    .card-user{
+        min-width: 16rem;
+        margin: 2.25rem !important;
+    }
+    .prev-btn,
+    .next-btn {
+        top: 62% !important;
+    }
+    .prev-btn {
+        left: 25px !important;
+    }
+
+    .next-btn {
+        right: 25px !important;
+    }
+    .dots {
+    position: absolute;
+        top: 45rem !important;
+    }
+}
+
+/* Slider Card Utilisateur Index */
+
+.slider {
+    position: relative;
+    top: 10rem;
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: flex-start;
+    transition: transform 0.3s ease-in-out;
+}
+
+.competences-slider{
+    display: flex !important;
+    justify-content: space-around !important;
+    margin: 0 auto;
+    width: 80% !important;
+}
+
+.card-user{
+    background: #184A2D;
+    height: auto;
+    min-width: 16rem;
+    border-radius: 16px;
+    margin: 2rem;
+    padding: 2rem;
+    box-shadow: 0 2px 4px #184A2D;
+}
+
+.card-user.selected {
+    transform: scaleX(1.1) scaleY(1.1) translateX(1rem) translateY(-.4rem);
+    box-shadow: 0 2px 4px #FFB400;
+    border: 4px solid #FFB400;
+    margin: 2rem !important;
+    padding: 2rem !important;
+}
+
+.box-btn-plus-slider{
+    position: relative;
+    top: 0rem;
+    left: 5%;
+}
+.btn-plus-slider{
+    position: absolute;
+    bottom: -3rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Lato';
+    font-weight: bold;
+    background: #FFB400;
+    width: auto;
+    height: auto;
+}
+.btn-plus-slider:hover{
+    background: #184A2D;
+    border: solid 3px #001007;
+    transform: scale(1.2) translate(-50%, -50%);
+    transition: 0.3s ease-in;
+}
+.prev-btn,
+.next-btn {
+    position: absolute;
+    top: 58%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    color: #FFB400;
+    font-size: 42px;
+    cursor: pointer;
+}
+
+.prev-btn {
+    left: 50px;
+}
+
+.next-btn {
+    right: 50px;
+}
+
+.dots {
+    position: absolute;
+    top: 45.5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 0 6px;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #FFB400;
+
+}
+

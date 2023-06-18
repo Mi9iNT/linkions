@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+	{# {{ dump(messages) }} #}
+
+	<style></style>
+
+
+	<!-- Page Content -->
+
+
+	<h1 class="title-h1">{{ title }}</h1>
+	<h3 class="title-h2 top-text">Vous trouverez ci bas les 10 derniers membres inscrits et les informations qu'ils ont renseignés :</h3>
+
+	<div class="d-flex justify-content-center">
+
+		{% if users is empty %}
+			<h2 class="title-h2">Aucun Membre ne s'est encore enregistrer</h2>
+
+		{% elseif users is not empty %}
+
+			<div class="box-card-slide" style="width: 100%;">
+				<div class="slider">
+					<div class="slider-container">
+						{% for user in users %}
+							{% if user.visibilityProfil is not empty %}
+								{% if user.visibilityProfil.adminVisibility == 'visible' or user.visibilityProfil.adminVisibility is null %}
+									<!-- Votre code HTML pour le slider ici -->
+									<!-- Slideshow container -->
+
+										<div class="card card-user text-light"> <div class="row">
+											<div class="border-img-card {{ user.statut }}2">
+
+												<div class="col d-flex justify-content-center box-avatar-card">
+													{% if user.avatar is empty and user.statut is empty %}
+														<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+													{% elseif user.avatar is empty and user.statut starts with 'e' %}
+														<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+													{% elseif user.avatar is empty and user.statut starts with 's' %}
+														<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+													{% elseif user.avatar is empty and  user.statut starts with 'f' %}
+														<img class="card-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+													{% elseif user.avatar is not empty and user.statut is not empty %}
+														<img class="card-img-top" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+													{% endif %}
+												</div>
+											</div>
+
+											{% if ['username'] is defined and ['username'] is not empty %}
+												<h3 class="card-title text-center text-card title-h2">{{ user.username }}</h3>
+											{% endif %}
+
+											{% if ['job_title'] is defined and ['job_title'] is not empty %}
+												<h3 class="card-text text-center title-h4">{{ user.jobTitle }}</h3>
+											{% endif %}
+											<div>
+												{% if ['localisation'] is defined and ['localisation'] is not empty %}
+													<h3 class="card-text text-center title-h2">{{ user.localisation }}</h3>
+												{% endif %}
+											</div>
+										</div>
+										<div class="card-body">
+											<div class="competences-slider">
+												{% if ['skills'] is defined %}
+													{% for skill in user.skills|slice(0, 5) %}
+														{% if ['statut'] is defined %}
+															{% if user.statut starts with 'e' %}
+																<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-skill text-center mx-2 vide-en-recherche">{{ skill.name }}</a>
+															{% elseif user.statut starts with 'f' %}
+																<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-skill text-center mx-2 vide-freelance">{{ skill.name }}</a>
+															{% else %}
+																<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-skill text-center mx-2 {{ user.statut }}">{{ skill.name }}</a>
+
+															{% endif %}
+
+														{% endif %}
+
+													{% endfor %}
+												{% endif %}
+
+
+											</div>
+
+
+										</div>
+										<div class="box-btn-plus-slider">
+											<a href="{{ path('app_membre_infos', { 'userName' : user.username, 'userId' : user.id } ) }}" class="btn btn-plus-slider text-center">Voir plus</a>
+										</div>
+									</div>
+
+								{% endif %}
+							{% endif %}
+
+
+						{% endfor %}
+					</div>
+
+				</div>
+				<!-- Previous button -->
+				<button class="prev-btn">&lsaquo;</button>
+				<!-- Next button -->
+				<button class="next-btn">&rsaquo;</button>
+				<!-- Dots navigation -->
+				<div class="dots"></div>
+			</div>
+		{% endif %}
+	</div><!-- End Page Content --><!-- Image of location/map -->{% endblock %}

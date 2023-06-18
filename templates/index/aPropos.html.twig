@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style></style>
+
+{% endblock %}
+
+
+{% block body %}
+	<div class="d-flex flex-column mb-3 mt-5 mx-5">
+		<h1 class="title-h1">{{ title }}</h1>
+
+		<p>
+			<a href="{{ path('app_index') }}">
+				<span class="spanBoldYellow">LinkiOns</span>
+			</a>
+			est une
+			<span class="spanBoldYellow">application web</span>
+			conçue pour aider ses
+			<a href="{{ path('app_membre') }}">
+				<span class="spanBoldYellow">membres</span>
+			</a>
+			en reconversion professionnelle ou ayant suivi une formation professionnelle à trouver un poste.
+		</p>
+		<p>Notre
+			<span class="spanBoldYellow">objectif</span>
+			est de permettre la
+			<span class="spanBoldYellow">mise en relation</span>
+			entre les
+			<a href="{{ path('app_membre') }}">
+				<span class="spanBoldYellow">membres</span>
+			</a>
+			et les employeurs en offrant une
+			<span class="spanBoldYellow">plateforme</span>
+			<span class="spanBoldYellow">simple</span>
+			et
+			<span class="spanBoldYellow">intuitive</span>
+			pour déposer ou créer son CV et rechercher des
+			<a href="{{ path('app_membre') }}">
+				<span class="spanBoldYellow">membres</span>
+			</a>
+			répondant à certains critères.</p>
+		<p>Avec
+			<span class="spanBoldYellow">LinkiOns</span>, vous pouvez créer un profil complet et détaillé pour mettre en avant vos
+			<span class="spanBoldYellow">compétences</span>, vos
+			<span class="spanBoldYellow">formations</span>
+			et vos différentes
+			<span class="spanBoldYellow">expériences</span>.</p>
+
+		<p>Notre fonction de
+			<span class="spanBoldYellow">recherche avancée</span>
+			vous permet de trouver facilement des membres correspondant à vos critères et de pouvoir prendre
+			<span class="spanBoldYellow">contact</span>
+			avec eux si besoin.</p>
+
+		<p>Nous sommes constamment à l’écoute de nos
+			<a href="{{ path('app_membre') }}">
+				<span class="spanBoldYellow">membres</span>
+			</a>
+			pour améliorer notre service et vous aider à atteindre vos objectifs professionnels ;
+		</p>
+
+		<a href="{{ path('app_contact_us') }}">
+			<span class="spanBoldYellow">contacter nous !</span>
+		</a>
+	</p>
+
+	<p>
+		<a href="{{ path('app_register') }}">
+			<span class="spanBoldYellow">Rejoignez</span>
+		</a>
+		dès maintenant la communauté
+		<span class="spanBoldYellow">LinkiOns</span>
+		et donnez un nouveau souffle à votre carrière!</p>
+
+</div>{% endblock %}{% block javascripts %}
+<script></script>{% endblock %}

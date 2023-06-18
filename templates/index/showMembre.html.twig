@@ -1,0 +1,262 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+	-
+	{{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+	<style></style>
+
+	<!-- Page Content -->
+	<h1 class="title-h1">{{ title }}</h1>
+
+	<div class="container mb-5">
+		{% if membre is defined %}
+			<h2 class="title-h3 text-center  mb-5">{{ membre.username }}</h2>
+
+			<div class="d-flex my-5 justify-content-center mx-auto">
+				{% if membre.avatar is empty and membre.statut is empty %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+				{% elseif membre.avatar is empty and membre.statut starts with 'e' %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+				{% elseif membre.avatar is empty and membre.statut starts with 's' %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+				{% elseif membre.avatar is empty and  membre.statut starts with 'f' %}
+					<img class="membre-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+				{% elseif membre.avatar.avatarName is not empty and membre.statut is not empty %}
+					<img class="membre-img-top" src="{{ asset('assets/uploads/avatar-user/' ~ membre.avatar.avatarName) }}" alt="Avatar Utilisateur">
+				{% endif %}
+			</div>
+			<div class="row">
+				{% if ['job_title'] is defined %}
+					<h3 class="title-h3 text-center  mb-5">{{ membre.jobTitle }}</h3>
+				{% endif %}
+			</div>
+			<h3 class="text-center">Informations Utilisateur<h3>
+
+					<div class="d-flex justify-content-center mt-5 mb-5">
+
+						{% if membre.skills is not empty and membre.skills is not null %}
+							{% for skill in membre.skills %}
+								{% if membre.statut is not empty %}
+									{% if membre.statut starts with 'e' %}
+										<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-plus mx-2 my-5 vide-en-recherche">{{ skill.name }}</a>
+									{% elseif membre.statut starts with 'f' %}
+										<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-plus mx-2 my-5 vide-freelance">{{ skill.name }}</a>
+									{% else %}
+										<a href="{{ path('app_membre', {'search': skill.name}) }}" class="btn btn-plus mx-2 my-5 {{ membre.statut }}">{{ skill.name }}</a>
+									{% endif %}
+
+								{% endif %}
+
+							{% endfor %}
+						{% endif %}
+					</div>
+					{% if user.email is defined and membre.email is defined %}
+						<div class="row">
+							<a class="btn btn-contact" href="{{ path('app_utilisateur_send_mail', { 'userId': membre.id, 'username' : membre.username }) }}">Contacter</a>
+						</div>
+					{% endif %}
+					<section class="block-info-user container mt-5">
+
+						<h3 class="text-center mt-5 mb-5">Informations Générales<h3>
+
+								<table class="table table-dark">
+									<tbody>
+										{% if membre.curriculumVitae is not empty %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Curriculum-Vitae:</th>
+												<td class="text-center col-md-10 col-sm-8">
+													<a target="_blank" href="{{ asset('assets/uploads/cv/' ~ membre.curriculumVitae.curriculumName) }}">Voir Curriculum Vitae</a>
+												</td>
+											</tr>
+										{% endif %}
+										{% if 'lastname' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Nom:</th>
+												<td class="text-center col-md-10 col-sm-8">{{ membre.lastname }}</td>
+											</tr>
+										{% endif %}
+										{% if 'firstname' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Prénom:</th>
+												<td class="text-center col-md-10 col-sm-8">{{ membre.firstname }}</td>
+											</tr>
+										{% endif %}
+										{% if 'localisation' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Localisation:</th>
+												<td class="text-center col-md-10 col-sm-8">{{ membre.localisation }}</td>
+											</tr>
+										{% endif %}
+										{% if 'statut' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Statut :</th>
+												{% if membre.statut starts with 'e' %}
+													<td class="text-center col-md-10 col-sm-8">En Recherche</td>
+												{% endif %}
+												{% if membre.statut starts with 's' %}
+													<td class="text-center col-md-10 col-sm-8">Salarié</td>
+												{% endif %}
+												{% if membre.statut starts with 'f' %}
+													<td class="text-center col-md-10 col-sm-8">Freelance</td>
+												{% endif %}
+											</tr>
+										{% endif %}
+										{% if 'description' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Description:</th>
+												<td class="text-start col-md-10 col-sm-8">{{ membre.description }}</td>
+											</tr>
+										{% endif %}
+										{% if 'job_title' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Titre :</th>
+												<td class="text-center col-md-10 col-sm-8">{{ membre.jobTitle }}</td>
+											</tr>
+										{% endif %}
+										{% if 'birthday' != null %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Âge:</th>
+												<td class="text-center col-md-10 col-sm-8">{{ year|date('Y') - membre.birthday|date('Y') }}</td>
+											</tr>
+										{% endif %}
+										{% if 'created_at' is defined %}
+											<tr>
+												<th scope="row" class="col-md-2 col-sm-4">Profil créé le:</th>
+												<td class="text-center col-md-10 col-sm-8">{{ membre.createdAt|date('d m Y h:i:s') }}</td>
+											</tr>
+										{% endif %}
+									</tbody>
+								</table>
+							</section>
+							<section class="block-formation-user mt-5">
+								{% if membre.formations is not empty %}
+									<h3 class="text-center mb-5">Formations Utilisateur</h3>
+								{% endif %}
+
+								{% for formation in membre.formations %}
+									{# {{ dump(formationUSer) }} #}
+									<table class="table table-dark">
+										<tbody>
+											{% if formation.formationTitle is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Titre de la formation :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationTitle }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if formation.formationCentreName is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Nom du centre de formation :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationCentreName }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if formation.formationDuree is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Durée de la formation :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationDuree }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if formation.formationDateDebut is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Date de début :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationDateDebut.format('d-m-Y') }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if formation.formationDateFin is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Date de fin :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationDateFin.format('d-m-Y') }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if formation.formationDetails is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Détails de la formation :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationDetails }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if formation.formationValidee is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Formation validée :</th>
+													<td class="col-md-6 col-sm-8">{{ formation.formationValidee }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+										</tbody>
+									</table>
+								{% endfor %}
+							</section>
+							<section class="block-exp-user mt-5 mb-5">
+								{% if membre.experiences is not empty %}
+									<h3 class="text-center mb-5">Expériences Utilisateur</h3>
+								{% endif %}
+								{% for experience in membre.experiences %}
+									<table class="table table-dark">
+										<tbody>
+											{% if experience.posteName is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Nom du poste :</th>
+													<td class="col-md-6 col-sm-8">{{ experience.posteName }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if experience.tacheRealisee is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Tâche(s) réalisée(s) :</th>
+													<td class="col-md-6 col-sm-8">{{ experience.tacheRealisee }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if experience.dureeContrat is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Durée du contrat :</th>
+													<td class="col-md-6 col-sm-8">
+														{% set years = experience.dureeContrat.y %}
+														{% set pluralAn = '' %}
+														{% if years > 1 %}
+															{% set pluralAn = 's' %}
+														{% endif %}
+														{{ years }}
+														an{{ pluralAn }},
+
+														{% set months = experience.dureeContrat.m %}
+														{% if months > 1 %}
+															{{ months }}
+															mois
+														{% else %}
+															{{ months }}
+															mois
+														{% endif %}
+													</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if experience.entrepriseName is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Nom de l'entreprise :</th>
+													<td class="col-md-6 col-sm-8">{{ experience.entrepriseName }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+											{% if experience.entrepriseLocation is not empty %}
+												<tr>
+													<th scope="row" class="col-md-3 col-sm-4">Localisation de l'entreprise :</th>
+													<td class="col-md-6 col-sm-8">{{ experience.entrepriseLocation }}</td>
+													<td class="col-md-3 col-sm-12"></td>
+												</tr>
+											{% endif %}
+										</tbody>
+									</table>
+								{% endfor %}
+							</section>
+						{% endif %}
+					</div><!-- End Page Content --><!-- Image -->{% endblock %}

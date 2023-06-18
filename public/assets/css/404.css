@@ -1,0 +1,85 @@
+/* Définition des animations */
+		@keyframes fadeOut {
+			from {
+				opacity: 1;
+			}
+			to {
+				opacity: 0;
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+
+		@keyframes moveDown {
+			from {
+				transform: translateY(0px);
+			}
+			to {
+				transform: translateY(25px);
+			}
+		}
+
+		@keyframes moveDownSecond {
+			from {
+				transform: translateY(0px);
+			}
+			to {
+				transform: translateY(50px);
+			}
+		}
+
+		@keyframes moveDownThird {
+			from {
+				transform: translateY(0px);
+			}
+			to {
+				transform: translateY(75px);
+			}
+		}
+
+
+		/* Animation du texte "404" */
+		#not-found-404 {
+			font-family: 'Spline Sans Mono', monospace;
+			color: #FFB400;
+			font-size: 6rem;
+			/* L'animation fadeIn commence après un délai de 2 secondes et dure 1 seconde */
+			animation: fadeIn 1s ease-in-out 2s forwards, moveDown 1s ease-in-out forwards, fadeOut 1s ease-in-out 3s, moveDown 1s ease-in-out, fadeIn 6s ease-in-out 7s forwards;
+		}
+
+		/* Animation du texte "error" */
+		#error {
+			font-family: 'Spline Sans Mono', monospace;
+			color: #FFB400;
+			font-size: 6rem;
+			opacity: 0; /* Masquer le texte au début de l'animation */
+			/* L'animation fadeIn commence après un délai de 6 secondes et dure 1 seconde */
+			/* L'animation fadeOut commence après un délai de 8 secondes et dure 1 seconde */
+			animation: fadeIn 1s ease-in-out 3s forwards, moveDownSecond 1s ease-in-out forwards, fadeOut 1s ease-in-out 3s, moveDownSecond 1s ease-in-out, fadeIn 6s ease-in-out 7s forwards;
+
+		}
+
+		/* Animation du texte "Page non trouvée" */
+		#page-not-found {
+			font-family: 'Lato';
+			color: #FFB400;
+			font-size: 4rem;
+			opacity: 0;
+			/* L'animation fadeIn commence après un délai de 9 secondes et dure 1 seconde */
+			/* L'animation moveDown commence après un délai de 10 secondes et dure 1 seconde */
+			animation: fadeIn 1s ease-in-out 5s forwards, moveDownThird 1s ease-in-out forwards, fadeOut 1s ease-in-out 3s, moveDownThird 1s ease-in-out, fadeIn 6s ease-in-out 7s forwards;
+
+		}
+
+		#container-404 {
+			text-align: center;
+			width: 100%;
+			height: 50vh;
+		}
