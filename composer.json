@@ -1,4 +1,6 @@
 {
+    "name": "linkions",
+    "description": "Dépôt de CV",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
