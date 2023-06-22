@@ -87,6 +87,16 @@ app_utilisateur_send_admin_mail:
   controller: 'App\Controller\EmailController::utilisateurSendAdminMail'
   methods: GET|POST
 
+app_recup_account:
+  path: /recuperation-de-compte
+  controller: 'App\Controller\EmailController::recupAccount'
+  methods: GET|POST
+
+app_reset_password:
+  path: /reinitialiser-mot-de-passe/{token}
+  controller: App\Controller\EmailController::resetPassword
+  methods: [GET, POST]
+
 app_a_propos:
   path: /à propos
   controller: 'App\Controller\IndexController::appApropos'
@@ -125,6 +135,16 @@ app_admin_add_admin_role:
 app_super_admin_remove_role_admin:
   path: /administration/{userId}/{userName}/supprimer/role/admin
   controller: 'App\Controller\SuperAdminController::removeAdminRole'
+  methods: GET|POST
+
+app_register:
+  path: /inscription
+  controller: 'App\Controller\SecurityController::register'
+  methods: GET|POST
+
+app_login:
+  path: /connexion
+  controller: 'App\Controller\SecurityController::login'
   methods: GET|POST
 
 app_deconnexion:

@@ -16,6 +16,7 @@
 			<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/404.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css">
+			<link rel="stylesheet" href="{{ asset('assets/css/utilisateurs.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/membre.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/slider.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}" type="text/css">
@@ -29,11 +30,7 @@
 		{% endblock %}
 	</head>
 
-
-	<!-- Menu page content -->
-	<main
-		class="container">
-		{# read and display all flash messages #}
+	<header>{% include'layout/header.html.twig' %}
 		{% for label, messages in app.flashes %}
 			{% for message in messages %}
 				<div class="text-center alert {{ label }}">
@@ -41,34 +38,33 @@
 				</div>
 			{% endfor %}
 		{% endfor %}
+	</header>
+
+	<!-- Menu page content -->
+	<main
+		class="container">
+		{# read and display all flash messages #}
+		{% block body %}{% endblock %}
+	</main>
+	<footer>{% include'layout/footer.html.twig' %}</footer>
 
 
-		<a class="box-logo" href="{{ path('app_index') }}">
-			<div class="logo" aria-label="Logo faisant office de lien vers la page d'accueil."></div>
-			<a></main>
-
-			{% block body %}{% endblock %}
-
-			{% include'layout/menu.html.twig' %}
-			{% block javascript %}
-				<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-				<script src="{{ asset('assets/js/menu.js') }}"></script>
-				<script src="{{ asset('assets/js/slider.js') }}"></script>
-				<script src="{{ asset('assets/js/membre.js') }}"></script>
-				<script src="{{ asset('assets/js/boutonCoulissant.js') }}"></script>
-				<!-- Google tag (gtag.js) -->
-				<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0X22SJMP1"></script>
-				<script>
-					window.dataLayer = window.dataLayer || [];
+	{% block javascript %}
+		<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('assets/js/menu.js') }}"></script>
+		<script src="{{ asset('assets/js/slider.js') }}"></script>
+		<script src="{{ asset('assets/js/membre.js') }}"></script>
+		<script src="{{ asset('assets/js/boutonCoulissant.js') }}"></script>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0X22SJMP1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
 function gtag() {
 dataLayer.push(arguments);
 }
 gtag('js', new Date());
 
 gtag('config', 'G-Z0X22SJMP1');
-				</script>
-
-			{% endblock %}
-		</body>
-	</html>
-</html>
+		</script>
+	{% endblock %}
+</html></body></html></html>

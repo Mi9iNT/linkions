@@ -18,7 +18,7 @@ class MailerService
     }
 
 
-    public function sendEmail($to, $from, $subject, $message, $username, $template)
+    public function sendEmail($to, $from, $subject, $message, $username, $resetLink, $template)
     {
         $email = (new TemplatedEmail())
             ->from('linkions.contact@linkions.fr')
@@ -30,6 +30,7 @@ class MailerService
                 'subject' => $subject,
                 'message' => $message,
                 'username' => $username,
+                'resetLink' => $resetLink,
             ])
             ->htmlTemplate($template);
 

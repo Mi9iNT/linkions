@@ -9,42 +9,44 @@
 {% block body %}
 
 
-	<div class="container">
-		<h1 class="title-h1">{{ formName }}</h1>
+	<h1 class="title-h1">{{ formName }}</h1>
 
-		<form method="post">
+	<form method="post">
 
-			{% if app.user %}
-				<div class="mb-3">
-					Vous êtes connecté en tant que
-					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout') }}">Déconnexion</a>
-				</div>
-			{% endif %}
-
-
-			<div class="mb-3 mt-5">
-
-				<label for="inputUsername" class="form-label">Pseudo :</label>
-
-				<input type="text" class="form-control" name="username" id="inputUsername" aria-describedby="textHelp" placeholder="Renseigner votre Pseudo" value="{{ last_username }}">
-
-			</div>
+		{% if app.user %}
 			<div class="mb-3">
-				<label for="inputPassword" class="form-label">Mot de Passe :</label>
-
-				<input type="password" name="password" class="form-control" placeholder="Renseigner votre Mot de passe" id="inputPassword">
-
-
+				Vous êtes connecté en tant que
+				{{ app.user.userIdentifier }},
+				<a href="{{ path('app_logout') }}">Déconnexion</a>
 			</div>
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+		{% endif %}
 
 
-			<div class="box-btn mt-5">
-				<button type="submit" class="btn-yellow-large">CONNEXION</button>
-			</div>
+		<div class="mb-3 mt-5">
 
-		</form>
-	</div>
+			<label for="inputUsername" class="form-label">Pseudo :</label>
+
+			<input type="text" class="form-control" name="username" id="inputUsername" aria-describedby="textHelp" placeholder="Renseigner votre Pseudo" value="{{ last_username }}">
+
+		</div>
+		<div class="mb-3">
+			<label for="inputPassword" class="form-label">Mot de Passe :</label>
+
+			<input type="password" name="password" class="form-control" placeholder="Renseigner votre Mot de passe" id="inputPassword">
+
+
+		</div>
+		<div class="mb-3 text-center mx-auto">
+			<a class="" href="{{ path('app_recup_account') }}">Mot de passe oublié</a>
+		</div>
+
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+		<div class="box-btn mt-5">
+			<button type="submit" class="btn-yellow-large">CONNEXION</button>
+		</div>
+
+	</form>
 
 {% endblock %}

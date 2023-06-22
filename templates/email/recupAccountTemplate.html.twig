@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ subject }}</title>
+	</head>
+	<body style="font-family: 'Spline Sans Mono', monospace;background-color: #001007;">
+		<div style="text-align: start;margin: 50px 0 0 50px;">
+			<img style="width: 100px;" src="{{ absolute_url(asset('assets/img/logoMobile.png')) }}" alt="Logo de linkions">
+		</div>
+		<div style="margin-left: 50px;">
+			<h1 style="color: #FFB400;font-size: 24px;text-align: center;margin-top: 50px;margin-bottom: 150px;">LinkiOns</h1>
+			<p style="color: #c0f4d7;font-size: 16px;text-align: left;">Bonjour
+				<span style="color: #FFB400;font-size: 20px;">{{ username }}</span>
+			</p>
+
+
+			<p style="color: #c0f4d7;font-size: 16px;text-align: left;">
+				Vous avez demandé une récupération de compte, par mesure de sécurité, si cette action n'est pas de vous veuillez vous connecter pour modifier votre mot de passe.</p><br><br><p>Sinon, en cliquant sur ce
+				<a style="color: #FFB400;font-size: 20px;" href="{{ resetLink }}">lien</a>
+				vous pourrez accéder à la réinitialisation de votre mot de passe.</p>
+		</div>
+	</body>
+</html>

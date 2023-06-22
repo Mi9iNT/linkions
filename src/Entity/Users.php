@@ -84,6 +84,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?VisibilityProfil $visibilityProfil = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetMdp = null;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -432,6 +435,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->visibilityProfil = $visibilityProfil;
+
+        return $this;
+    }
+
+    public function getResetMdp(): ?string
+    {
+        return $this->resetMdp;
+    }
+
+    public function setResetMdp(?string $resetMdp): static
+    {
+        $this->resetMdp = $resetMdp;
 
         return $this;
     }

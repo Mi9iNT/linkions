@@ -1,0 +1,39 @@
+<nav class="menu-desk">
+	<ul class="d-inline-flex justify-content-center">
+		<li style="margin-right:0.3rem;">
+			<a class="menu-first-item un" href="{{ path('app_index') }}">ACCUEIL</a>
+		</li>
+		<li>
+			<a class="menu-next-item deux" href="{{ path('app_membre') }}">MEMBRE</a>
+		</li>
+		<li style="margin-left:0.3rem;">
+			<a class="menu-last-item trois" href="{{ path('app_utilisateur') }}">PROFIL</a>
+		</li>
+		<li class="btn-group dropup">
+			<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+			<ul class="dropdown-menu">
+				<li>
+					<a class="dropdown-item" href="{{ path('app_a_propos') }}">À propos</a>
+
+				</li>
+				<li>
+					<a class="dropdown-item" href="{{ path('app_mentions_legales') }}">Mentions Légales</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="{{ path('app_politique_confidentialite') }}">Politique de Confidentialité</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="{{ path('app_cgu') }}">Condition Générale d'Utilisation</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="{{ path('app_contact_us') }}">Nous contacter</a>
+				</li>
+				{% if user.email is defined and user.email is not empty %}
+					<li>
+						<a class="dropdown-item" href="{{ path('app_utilisateur_send_admin_mail') }}">Contacter un administrateur</a>
+					</li>
+				{% endif %}
+			</ul>
+		</li>
+	</ul>
+</nav>

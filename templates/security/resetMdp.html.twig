@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ formName }}
+	-
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="container">
+		<h1 class="title-h1">{{ formName }}</h1>
+
+		<form method="post">
+
+			<div class="mb-3">
+				{{ form(resetForm) }}
+				</div>
+
+			</form>
+		</div>
+
+	{% endblock %}

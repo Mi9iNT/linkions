@@ -10,13 +10,177 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use App\Form\ResetPasswordType;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class EmailController extends AbstractController
 {
+
+    /**
+     * Récupérer compte
+     */
+
+    # Récupération compte, permet si l'adresse email fournies est trouver en bdd et si l'username correspond à l'username de l'email renseigner pour lui envoyer un mail à l'adresse mail avec un lien permettant de modifier son mot de passe
+    #[Route('/recuperation-de-compte', name: 'app_recup_account')]
+    public function recupAccount(Request $request, ManagerRegistry $doctrine, MailerService $mailerService): Response
+    {
+        // Vérifier si l'utilisateur est déjà connecté
+        if ($this->getUser()) {
+            // Rediriger l'utilisateur vers une page appropriée
+            return $this->redirectToRoute('app_index');
+        }
+
+        #Formulaire de récupération de compte
+        $sendEmailForm = $this->createFormBuilder()
+            ->add('to', EmailType::class, [
+                'label' => 'Email :',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Renseigner votre email',
+                ]
+            ])
+            ->add('from', HiddenType::class, [
+                'data' => 'linkions.contact@linkions.fr',
+            ])
+            ->add('subject', HiddenType::class, [
+                'data' => 'Récupération de compte'
+            ])
+            ->add(
+                'username',
+                textType::class,
+                [
+                    'label' => 'pseudo',
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Renseigner votre pseudo',
+                        'class' => 'form-control mb-5',
+                    ]
+                ]
+            )
+            ->add('submit', SubmitType::class, [
+                'label' => 'ENVOYER',
+                'attr' => [
+                    'class' => 'btn-yellow-large mt-5 position-absolute start-50 translate-middle my-5',
+                ]
+            ])
+            ->getForm();
+
+
+        $sendEmailForm->handleRequest($request);
+
+        if ($sendEmailForm->isSubmitted() && $sendEmailForm->isValid()) {
+            $formData = $sendEmailForm->getData();
+            // Vérifier si l'email et le nom d'utilisateur correspondent en base de données
+            $entityManager = $doctrine->getManager();
+            $userRepository = $entityManager->getRepository(Users::class);
+            $user = $userRepository->findOneBy([
+                'email' => $formData['to'],
+                'username' => $formData['username'],
+            ]);
+            if ($user) {
+                // Générer un token unique pour la réinitialisation du mot de passe
+                $token = uniqid();
+
+                // Enregistrer le token dans la base de données pour l'utilisateur
+                $user->setResetMdp($token);
+                $entityManager->flush();
+
+                $username = $formData['username'];
+
+                // Envoyer l'e-mail de réinitialisation avec le token
+                $resetLink = $this->generateUrl('app_reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+                $mailerService->sendEmail(
+                    $formData['to'],
+                    $formData['from'],
+                    $formData['subject'],
+                    $formData['username'],
+                    $username,
+                    $resetLink,
+                    'email/recupAccountTemplate.html.twig',
+
+
+                );
+
+                $this->addFlash('success', '✅ Email envoyé !');
+                return $this->redirectToRoute('app_index');
+            } else {
+                // Le compte n'a pas été trouvé, afficher un message d'erreur
+                $this->addFlash('error', '❌ Compte non trouvé. Veuillez contacter un administrateur.');
+            }
+        }
+
+        return $this->render('email/email.html.twig', [
+            'title' => 'Récupération de compte',
+            'formName' => 'Récupération de compte',
+            'sendEmailForm' => $sendEmailForm->createView(),
+            'year' => new \DateTime('now'),
+        ]);
+    }
+
+    /**
+     * Réinitialiser mot de passe si mot de passe oublier
+     */
+
+    # Réinitialiser mot de passe {token} permet de réinitialiser le mot de passe d'un utilisateur en fonction des informations passées dans le formulaire de récupération de compte et le token obtenu
+    #[Route('/reinitialiser-mot-de-passe/{token}', name: 'app_reset_password')]
+    public function resetPassword(Request $request, ManagerRegistry $doctrine, string $token, UserPasswordHasherInterface $passHasher): Response
+    {
+        // Récupérer l'utilisateur correspondant au token de réinitialisation
+        $user = $doctrine->getRepository(Users::class)->findOneBy(['resetMdp' => $token]);
+
+        if (!$user) {
+            // Afficher un message d'erreur si le token n'est pas valide
+            $this->addFlash('warning', '❌ Identifiant de réinitialisation invalide.');
+            return $this->redirectToRoute('app_index');
+        }
+
+        // Créer le formulaire de réinitialisation du mot de passe (à implémenter)
+        $resetForm = $this->createForm(ResetPasswordType::class);
+
+        $resetForm->handleRequest($request);
+        $password = $resetForm['password']->getData();
+        $repeatPassword = $resetForm['repeatPassword']->getData();
+
+        if ($resetForm->isSubmitted() && $resetForm->isValid()) {
+
+            if ($password == $repeatPassword && preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}$/', $password)) {
+                // Le mot de passe respecte le format requis
+                // Réinitialiser le mot de passe de l'utilisateur et enregistrer les modifications
+                $user->setPassword($passHasher->hashPassword($user, $password));
+                $user->setResetMdp(null);
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                // Rediriger l'utilisateur vers une page appropriée après la réinitialisation du mot de passe
+                $this->addFlash('success', '✅ Mot de passe réinitialisé avec succès.');
+                return $this->redirectToRoute('app_login');
+            } else {
+                // Le mot de passe ne respecte pas le format requis
+                // Gérer l'erreur ou afficher un message d'erreur approprié
+                $this->addFlash(
+                    'warning',
+                    '🛑 Le mot de passe doit contenir au minimum 9 caractères, au moins 1 chiffre, 1 caractère spécial, 1 minuscule et 1 majuscule.'
+                );
+            }
+        }
+
+        return $this->render('security/resetMdp.html.twig', [
+            'title' => 'Réinitialisation du Mot de passe',
+            'resetForm' => $resetForm->createView(),
+            'formName' => 'Réinitialisation du Mot de passe'
+        ]);
+    }
+
+
+
 
     /**
      * Nous contacter
@@ -84,6 +248,7 @@ class EmailController extends AbstractController
                 $messageData['to'],
                 $messageData['subject'],
                 $messageData['message'],
+                '',
                 'Email de Contact',
                 'email/contactUsTemplate.html.twig'
             );
@@ -180,6 +345,7 @@ class EmailController extends AbstractController
                 $sendEmailForm->get('subject')->getData(),
                 $sendEmailForm->get('message')->getData(),
                 $membreUsername,
+                '',
                 'email/emailTemplate.html.twig'
             );
 
@@ -270,6 +436,7 @@ class EmailController extends AbstractController
                     $sendEmailForm->get('subject')->getData(),
                     $sendEmailForm->get('message')->getData(),
                     $username,
+                    '',
                     'email/emailAdminTemplate.html.twig'
                 );
             }

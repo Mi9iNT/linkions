@@ -1,21 +1,52 @@
 /* Styles pour les petits écrans (mobiles en mode portrait) */
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 100px) and (max-width: 299px){
     .slider {
-        top: 10rem !important;
+        top: 6rem !important;
     }
     .card-user{
-        min-width: 16rem;
-        margin: 2.25rem !important;
+        min-width: 10rem !important;
+        margin: 2.30rem !important;
+    }
+    .card-user.selected {
+        transform: scaleX(1.1) scaleY(1.1) translateX(-.8rem) translateY(-.4rem) !important;
+    }
+    .prev-btn,.next-btn{
+        top: 80% !important;
     }
     .prev-btn {
-        left: 25px !important;
+        left: 10px !important;
     }
 
     .next-btn {
-        right: 25px !important;
+        right: 10px !important;
     }
     .dots {
-        top: 39.5rem !important;
+        top: 34rem !important;
+    }
+}
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (min-width: 300px) and (max-width: 480px) {
+    .slider {
+        top: 4rem !important;
+    }
+    .card-user{
+        min-width: 14rem !important;
+        margin: 2.25rem !important;
+    }
+    .card-user.selected {
+        transform: scaleX(1) scaleY(1) translateX(-1rem) translateY(-.4rem) !important;
+    }
+    .prev-btn,.next-btn{
+        top: 80% !important;
+    }
+    .prev-btn {
+        left: 10px !important;
+    }
+    .next-btn {
+        right: 10px !important;
+    }
+    .dots {
+        top: 28rem !important;
     }
 }
 /* Styles pour les mobiles en mode paysage */
@@ -41,25 +72,27 @@
 /* Styles pour les tablettes en mode portrait */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .slider {
-        top: 5rem !important;
+        top: 25rem !important;
     }
     .card-user{
-        min-width: 16rem;
+        height: 22rem !important;
+        min-width: 22rem !important;
         margin: 2.25rem !important;
     }
     .prev-btn,
     .next-btn {
-        top: 62% !important;
+        top: 130% !important;
+        font-size: 100px !important;
     }
     .prev-btn {
-        left: 25px !important;
+        left: 5px !important;
     }
 
     .next-btn {
-        right: 25px !important;
+        right: 5px !important;
     }
     .dots {
-        top: 41rem !important;
+        top: 60rem !important;
     }
 }
 /* Styles pour les tablettes en mode paysage et ordinateurs portables */
@@ -107,8 +140,7 @@
         right: 25px !important;
     }
     .dots {
-    position: absolute;
-        top: 40rem !important;
+        top: 31rem !important;
     }
 }
 /* Styles pour les grands écrans (ordinateurs de bureau et téléviseurs) */
@@ -117,7 +149,7 @@
         top: 5rem !important;
     }
     .card-user{
-        min-width: 16rem;
+        min-width: 22rem !important;
         margin: 2.25rem !important;
     }
     .prev-btn,
@@ -132,8 +164,7 @@
         right: 25px !important;
     }
     .dots {
-    position: absolute;
-        top: 45rem !important;
+        top: 33rem !important;
     }
 }
 
@@ -224,7 +255,7 @@
 
 .dots {
     position: absolute;
-    top: 45.5rem;
+    top: 33rem;
     height: 2rem;
     display: flex;
     justify-content: center;

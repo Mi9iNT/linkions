@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -23,7 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/register', name: 'app_register')]
+    #[Route(path: '/inscription', name: 'app_register')]
     public function register(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passHasher): Response
     {
         //Cette méthode permet la création d'un compte Client via formulaire
@@ -31,11 +32,21 @@ class SecurityController extends AbstractController
         $entityManager = $doctrine->getManager();
         //Nous créons un formulaire interne pour l'inscription
         $userForm = $this->createFormBuilder()
-            ->add('username', TextType::class, [
-                'label' => 'Pseudo :',
+            ->add('email', EmailType::class, [
+                'label' => 'Email :',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Renseigner votre Pseudo',
+                    'placeholder' => 'Renseigner votre Email, il permettra de récupérer votre compte.',
+                    'style' => 'margin-bottom: 1rem',
+                ]
+            ])
+            ->add('username', TextType::class, [
+                'label' => 'Pseudo :',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Renseigner votre Pseudo, il permettra de vous idéentifier',
                     'style' => 'margin-bottom: 3rem',
                 ]
             ])
@@ -64,7 +75,7 @@ class SecurityController extends AbstractController
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Renseigner votre Pseudo',
-                    'style' => 'margin-bottom: 3rem',
+                    'style' => 'margin-bottom: 1rem',
                     'value' => $date->format('d-m-Y H:i:s'),
                 ]
             ])
@@ -85,7 +96,7 @@ class SecurityController extends AbstractController
             if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}$/', $password)) {
                 // Le mot de passe ne respecte pas le format requis
                 // Gérer l'erreur ou afficher un message d'erreur approprié
-                $request->getSession()->getFlashBag()->add(
+                $this->addFlash(
                     'warning',
                     '🛑 Le mot de passe doit contenir au minimum 9 caractères, au moins 1 chiffre, 1 caractère spécial, 1 minuscule et 1 majuscule.'
                 );
@@ -101,7 +112,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add(
+                $this->addFlash(
                     'success',
                     '✅ Utilisateur enregistré ; vous pouvez vous connecter.'
                 );
@@ -117,11 +128,11 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, SessionInterface $session, Request $request): Response
     {
         if ($this->getUser()) {
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'success',
                 '✅ Vous êtes connecté !'
             );
@@ -132,7 +143,7 @@ class SecurityController extends AbstractController
         // $error = $authenticationUtils->getLastAuthenticationError();
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error !== null) {
-            $request->getSession()->getFlashBag()->add(
+            $this->addFlash(
                 'warning',
                 '🛑 Les informations saisies sont incorrectes.'
             );

@@ -1,5 +1,7 @@
 /* Styles pour les petits écrans (mobiles en mode portrait) */
-@media screen and (max-width: 480px) {}
+@media screen and (min-width: 100px) and (max-width: 299px) {}
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (min-width: 300px) and (max-width: 480px) {}
 /* Styles pour les mobiles en mode paysage */
 @media screen and (min-width: 481px) and (max-width: 767px) {}
 /* Styles pour les tablettes en mode portrait */

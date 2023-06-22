@@ -358,35 +358,7 @@ p{
     left: 1rem;
 }
 
-.p-link-user{
-    width: 4.5rem;
-    color: white;
-    background: #001007;
-    text-align: center;
-    margin: 0 auto;
-    position: relative;
-    top: .5rem;
-    z-index: 1000;
-    border-radius: 30% 30% 100% 100%;
-    border: solid 2px #184A2D;
-}
-.p-link-user.salarié{
-    color: black !important;
-}
-.box-admin-path{
-    position: relative;
-    top: -5rem;
-    right: 5rem;
-}
 
-.btn-path-admin{
-    width: 2rem;
-}
-
-.btn-path-admin:hover{
-    transform: scale(1.2);
-    transition: 0.4s ease-in;
-}
 
 .box-card-slide{
     display: flex;

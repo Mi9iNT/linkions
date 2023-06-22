@@ -1,0 +1,53 @@
+<a class="box-logo" href="{{ path('app_index') }}">
+	<div class="logo" aria-label="Logo faisant office de lien vers la page d'accueil."></div>
+	<a>
+
+		<div class="box-login-path fixed-top">
+			{% if is_granted('ROLE_MEMBER') %}
+				<div class="box-avatar-user-path">
+
+					<div class="box-user-logged">
+						<a class="link-avatar-user-path" href="{{ path('app_utilisateur') }}">
+							<div class="border_{{ user.statut }}">
+								{% if user.avatar is empty and user.statut is empty %}
+									<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-vide.png') }}" alt="Avatar Utilisateur">
+								{% elseif user.avatar is empty and user.statut starts with 'e' %}
+									<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-vert.png') }}" alt="Avatar Utilisateur">
+								{% elseif user.avatar is empty and user.statut starts with 's' %}
+									<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-jaune.png') }}" alt="Avatar Utilisateur">
+								{% elseif user.avatar is empty and  user.statut starts with 'f' %}
+									<img class="avatar-img-top" src="{{ asset('assets/img/avatar-user/logo-bleu.png') }}" alt="Avatar Utilisateur">
+								{% elseif user.avatar is not empty and user.statut is not empty %}
+									<img class="avatar-img-top" src="{{ asset('assets/uploads/avatar-user/' ~ user.avatar.avatarName) }}" alt="Avatar Utilisateur">
+								{% endif %}
+							</div>
+						</a>
+					</div>
+
+					<div class="row" style="top: -1rem; position: relative;">
+						<a href="{{ path('app_utilisateur') }}">
+							{% if user.username is not empty %}
+								<p class="p-link-user {{user.statut}}">{{ user.username }}</p>
+							{% endif %}
+						</a>
+					</div>
+					<div class="box-admin-path">
+						{% if is_granted('ROLE_ADMIN') %}
+							<a class="link-admin-path" href="{{ path('app_admin') }}">
+								<img class="btn-path-admin" src="{{ asset('assets/img/bouton/admin.png') }}" alt="Administration">
+							</a>
+						{% endif %}
+					</div>
+					<div class="box-btn-logout">
+						<a class="link-login-path btn-logout" href="{{ path('app_logout') }}"><img src="{{ asset('assets/img/bouton/offButton.png') }}" alt="Déconnexion" title="Déconnexion"></a>
+
+					</div>
+				</div>
+
+
+			{% else %}
+				<a class="link-register-path btn-yellow-register me-1" href="{{ path('app_register') }}">INSCRIPTION</a>
+
+				<a class="link-login-path btn-yellow-login" href="{{ path('app_login') }}">CONNEXION</a>
+			{% endif %}
+		</div>

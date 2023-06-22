@@ -80,7 +80,7 @@ class IndexController extends AbstractController
 
         array_splice($users, 5);
 
-        $request->getSession()->getFlashBag()->add('success', '✅ Vous êtes déconnecté !');
+        $this->addFlash('success', '✅ Vous êtes déconnecté !');
 
 
         return $this->render('index/index.html.twig', [
@@ -104,7 +104,7 @@ class IndexController extends AbstractController
         $visibility = $request->request->get('visibility');
         $user = $this->getUser();
         if (!$user) {
-            $request->getSession()->getFlashBag()->add('warning', '🛑 Veuillez vous connecter pour accéder à ce contenu.');
+            $this->addFlash('warning', '🛑 Veuillez vous connecter pour accéder à ce contenu.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -122,18 +122,16 @@ class IndexController extends AbstractController
                 $visibilityProfil->setUserVisbility('invisible');
             }
         } else {
-            $request->getSession()->getFlashBag()->add('warning', '🛑 Vous ne pouvez pas modifier cette donnée car votre profil a été masqué par un administrateur.');
+            $this->addFlash('warning', '🛑 Vous ne pouvez pas modifier cette donnée car votre profil a été masqué par un administrateur.');
             return $this->redirectToRoute('app_utilisateur', ['result' => 'error']);
         }
 
         $entityManager->persist($visibilityProfil);
         $entityManager->flush();
 
-        $request->getSession()->getFlashBag()->add('success', '✅ Visibilité du profil changée avec succès.');
+        $this->addFlash('success', '✅ Visibilité du profil changée avec succès.');
         return $this->redirectToRoute('app_utilisateur', ['result' => 'success']);
     }
-
-
 
 
     /**
@@ -147,7 +145,7 @@ class IndexController extends AbstractController
         $users = $this->getUser();
 
         if (!$users) {
-            $request->getSession()->getFlashBag()->add('warning', '🛑 Vous devez être connecté pour accéder à cette page.');
+            $this->addFlash('warning', '🛑 Vous devez être connecté pour accéder à cette page.');
             return $this->redirectToRoute('app_login'); // Rediriger vers la page de connexion
         }
 
@@ -156,7 +154,7 @@ class IndexController extends AbstractController
         $user = $userRepository->findOneBy(['id' => $users]);
 
         if (!$user) {
-            $request->getSession()->getFlashBag()->add('danger', '❌ Utilisateur introuvable.');
+            $this->addFlash('danger', '❌ Utilisateur introuvable.');
             return $this->redirectToRoute('app_index'); // Rediriger vers une autre page
         }
 
@@ -179,7 +177,7 @@ class IndexController extends AbstractController
         $users = $this->getUser();
 
         if (!$users) {
-            $request->getSession()->getFlashBag()->add('danger', '🛑 Vous devez être connecté pour accéder à cette page.');
+            $this->addFlash('danger', '🛑 Vous devez être connecté pour accéder à cette page.');
             return $this->redirectToRoute('app_login'); // Rediriger vers la page de connexion
         }
 
@@ -190,7 +188,7 @@ class IndexController extends AbstractController
 
         $user = $userRepository->find($users);
         if (!$user) {
-            $request->getSession()->getFlashBag()->add('danger', '❌ Utilisateur introuvable.');
+            $this->addFlash('danger', '❌ Utilisateur introuvable.');
             return $this->redirectToRoute('app_utilisateur');
         }
         ####### Formulaire Utilisateur #######
@@ -373,7 +371,7 @@ class IndexController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // Ajouter un message au flashbag
-                    $request->getSession()->getFlashBag()->add('warning', '❌ Une erreur est survenue lors de l\'ajout de l\'avatar');
+                    $this->addFlash('warning', '❌ Une erreur est survenue lors de l\'ajout de l\'avatar');
                     // ... handle exception if something happens during file upload
                 }
 
@@ -397,7 +395,7 @@ class IndexController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // Ajouter un message au flashbag
-                    $request->getSession()->getFlashBag()->add('warning', '❌ Une erreur est survenue lors de l\'ajout du CV');
+                    $$this->addFlash('warning', '❌ Une erreur est survenue lors de l\'ajout du CV');
                     // ... handle exception if something happens during file upload
                 }
 
@@ -410,7 +408,7 @@ class IndexController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // Ajouter un message au flashbag
-            $request->getSession()->getFlashBag()->add('success', '✅ Information(s) enregistrée(s) !');
+            $this->addFlash('success', '✅ Information(s) enregistrée(s) !');
             return $this->redirectToRoute('app_utilisateur');
         }
 
@@ -496,11 +494,11 @@ class IndexController extends AbstractController
 
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add('success', '✅ Compétence(s) ajoutée(s).');
+                $this->addFlash('success', '✅ Compétence(s) ajoutée(s).');
 
                 return $this->redirectToRoute('app_utilisateur');
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('danger', ' ❌ Une erreur est survenue lors de l\'ajout d\'une ou plusieurs compétences.');
+                $this->addFlash('danger', ' ❌ Une erreur est survenue lors de l\'ajout d\'une ou plusieurs compétences.');
             }
         }
 
@@ -533,9 +531,9 @@ class IndexController extends AbstractController
                 $competence->removeUser($user);
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add('success', '✅ Compétence supprimée.');
+                $this->addFlash('success', '✅ Compétence supprimée.');
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de la suppression de la compétence.');
+                $this->addFlash('danger', '❌ Une erreur est survenue lors de la suppression de la compétence.');
             }
         }
 
@@ -565,11 +563,11 @@ class IndexController extends AbstractController
                 $entityManager->persist($formation);
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add('success', '✅ Formation ajoutée.');
+                $this->addFlash('success', '✅ Formation ajoutée.');
 
                 return $this->redirectToRoute('app_utilisateur');
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de l\'ajout de la formation.');
+                $this->addFlash('danger', '❌ Une erreur est survenue lors de l\'ajout de la formation.');
             }
         }
 
@@ -615,11 +613,11 @@ class IndexController extends AbstractController
             try {
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add('success', '✅ Formation modifiée.');
+                $this->addFlash('success', '✅ Formation modifiée.');
 
                 return $this->redirectToRoute('app_utilisateur');
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de la modification de la formation.');
+                $this->addFlash('danger', '❌ Une erreur est survenue lors de la modification de la formation.');
             }
         }
 
@@ -650,12 +648,12 @@ class IndexController extends AbstractController
 
         // Vérifier si la formation existe
         if (!$formation) {
-            $request->getSession()->getFlashBag()->add('danger', '❌ Formation non trouvée.');
+            $this->addFlash('danger', '❌ Formation non trouvée.');
         }
 
         // Vérifier si l'utilisateur est autorisé à supprimer la formation
         if ($formation->getFormationUser() !== $user) {
-            $request->getSession()->getFlashBag()->add('danger', '🛑 Vous n\'êtes pas autorisé à supprimer cette formation.');
+            $this->addFlash('danger', '🛑 Vous n\'êtes pas autorisé à supprimer cette formation.');
         }
 
         try {
@@ -663,9 +661,9 @@ class IndexController extends AbstractController
             $entityManager->remove($formation);
             $entityManager->flush();
 
-            $request->getSession()->getFlashBag()->add('success', '✅ Formation supprimée.');
+            $this->addFlash('success', '✅ Formation supprimée.');
         } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de la suppression de la formation.');
+            $this->addFlash('danger', '❌ Une erreur est survenue lors de la suppression de la formation.');
         }
 
         return $this->redirectToRoute('app_utilisateur');
@@ -695,11 +693,11 @@ class IndexController extends AbstractController
                 $entityManager->persist($experience);
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add('success', '✅ Expérience ajoutée.');
+                $this->addFlash('success', '✅ Expérience ajoutée.');
 
                 return $this->redirectToRoute('app_utilisateur');
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de l\'ajout de l\expérience.');
+                $this->addFlash('danger', '❌ Une erreur est survenue lors de l\'ajout de l\expérience.');
             }
         }
 
@@ -745,11 +743,11 @@ class IndexController extends AbstractController
             try {
                 $entityManager->flush();
 
-                $request->getSession()->getFlashBag()->add('success', '✅ Expérience correctement modifiée.');
+                $this->addFlash('success', '✅ Expérience correctement modifiée.');
 
                 return $this->redirectToRoute('app_utilisateur');
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de la modification de l\'expérience.');
+                $this->addFlash('danger', '❌ Une erreur est survenue lors de la modification de l\'expérience.');
             }
         }
 
@@ -780,12 +778,12 @@ class IndexController extends AbstractController
 
         // Vérifier si la formation existe
         if (!$experience) {
-            $request->getSession()->getFlashBag()->add('danger', '❌ Expérience non trouvée.');
+            $this->addFlash('danger', '❌ Expérience non trouvée.');
         }
 
         // Vérifier si l'utilisateur est autorisé à supprimer la formation
         if ($experience->getUser() !== $user) {
-            $request->getSession()->getFlashBag()->add('warning', '🛑 Vous n\'êtes pas autorisé à supprimer cette expérience.');
+            $$this->addFlash('warning', '🛑 Vous n\'êtes pas autorisé à supprimer cette expérience.');
         }
 
         try {
@@ -793,9 +791,9 @@ class IndexController extends AbstractController
             $entityManager->remove($experience);
             $entityManager->flush();
 
-            $request->getSession()->getFlashBag()->add('success', '✅ Expérience supprimée.');
+            $this->addFlash('success', '✅ Expérience supprimée.');
         } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('danger', '❌ Une erreur est survenue lors de la suppression de l\'expérience.');
+            $this->addFlash('danger', '❌ Une erreur est survenue lors de la suppression de l\'expérience.');
         }
 
         return $this->redirectToRoute('app_utilisateur');
@@ -839,7 +837,7 @@ class IndexController extends AbstractController
         try {
             $users = $queryBuilder->getQuery()->getResult();
         } catch (\Exception $e) {
-            $session->getFlashBag()->add('danger', '❌ Une erreur s\'est produite lors de la recherche des membres.');
+            $this->addFlash('danger', '❌ Une erreur s\'est produite lors de la recherche des membres.');
             return $this->redirectToRoute('app_membre'); // Rediriger vers une autre page
         }
 
@@ -865,12 +863,12 @@ class IndexController extends AbstractController
         $membre = $userRepository->find($userId);
 
         if (!$membre) {
-            $request->getSession()->getFlashBag()->add('danger', '🛑 Membre non trouvé.');
+            $this->addFlash('danger', '🛑 Membre non trouvé.');
             return $this->redirectToRoute('app_membre'); // Rediriger vers une autre page
         }
 
         if ($membre->getUsername() !== $userName) {
-            $request->getSession()->getFlashBag()->add('danger', '🛑 Membre non trouvé.');
+            $this->addFlash('danger', '🛑 Membre non trouvé.');
             return $this->redirectToRoute('app_membre'); // Rediriger vers une autre page
         }
 

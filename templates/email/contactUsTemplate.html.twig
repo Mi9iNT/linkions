@@ -3,68 +3,33 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>{{ subject }}</title>
-		<style>
-			/* Styles personnalisés */
-			body {
-				font-family: 'Spline Sans Mono', monospace;
-				background-color: #001007 !important;
-			}
-			.logo {
-				text-align: start;
-				margin: 50px 0 0 50px;
-			}
-			.logo img {
-				width: 100px;
-			}
-			h1 {
-				color: #FFB400;
-				font-size: 24px;
-				text-align: center;
-				margin-top: 50px;
-				margin-bottom: 150px;
-			}
-			span {
-				color: #FFB400;
-				font-size: 26px;
-			}
-			p {
-				font-family: Arial, sans-serif;
-				color: #c0f4d7;
-				font-size: 16px;
-				text-align: left;
-			}
-		</style>
 	</head>
-	<body>
-		<div class="logo">
-			<img src="{{ absolute_url(asset('assets/img/logoMobile.png')) }}" alt="Logo de linkions">
+	<body style="font-family: 'Spline Sans Mono', monospace;background-color: #001007;">
+		<div style="text-align: start;margin: 50px 0 0 50px;">
+			<img style="width: 100px;" src="{{ absolute_url(asset('assets/img/logoMobile.png')) }}" alt="Logo de linkions">
+		</div>
+		<div style="margin-left: 50px;">
+			<h1 style="color: #FFB400;font-size: 24px;text-align: center;margin-top: 50px;margin-bottom: 150px;">LinkiOns</h1>
+			<p style="color: #c0f4d7;font-size: 16px;text-align: left;">Bonjour, vous avez reçu un message de contact</p>
+			{% if de is not empty %}
+				<p style="color: #FFB400;font-size: 20px;">De :</p>
+
+				<p style="color: #c0f4d7;font-size: 16px;text-align: left;margin-left:50px">{{ de }}</p>
+				<br>
+			{% endif %}
+
+			{% if subject is not empty %}
+				<p style="color: #FFB400;font-size: 20px;">Sujet :</p>
+				<p style="color:#c0f4d7;font-size:16px;text-align:left;margin-left:50px">{{ subject }}</p>
+				<br>
+			{% endif %}
+
+			{% if message is not empty %}
+				<p style="color: #FFB400;font-size: 20px;">Message :</p>
+				<p style="color:#c0f4d7;font-size:16px;text-align:left;margin-left:50px">{{ message }}</p>
+			{% endif %}
+
 		</div>
 
-		<h1>LinkiOns</h1>
-		<p>Vous reçu un message de contact</p>
-		<br>
-		<br>
-		{% if de is not empty %}
-			<p>
-				<span>De :</span>
-			</p>
-			<p>{{ de }}</p>
-			<br>
-		{% endif %}
-		<br>
-		{% if subject is not empty %}
-			<p>
-				<span>Sujet :</span>
-			</p>
-			<p>{{ subject }}</p>
-			<br>
-		{% endif %}
-
-		{% if message is not empty %}
-			<p>
-				<span>Message :</span>
-			</p>
-			<p>{{ message }}</p>
-		{% endif %}
 	</body>
-</html></body></html>
+</html>
