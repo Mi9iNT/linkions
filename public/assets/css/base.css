@@ -1,17 +1,26 @@
 /* Styles pour les petits écrans (mobiles en mode portrait) */
-@media screen and (max-width: 480px) {
-    .box-logo{
-        display: flex;
-        justify-content: flex-start;
-        width: 10rem;
-        margin-top: 1rem !important;
-        margin-left: 1rem !important;
+@media screen and (min-width: 100px) and (max-width: 299px){
+    .title-h1{
+        font-size: small !important;
     }
-    .logo {
-        background-image: url("../img/logoMobile.png");
-        width: 5rem !important;
-        height: 5rem !important;
+    .title-h2{
+        font-size: smaller !important;
     }
+
+    .title-h3{
+        font-size: smaller !important;
+    }
+
+    .title-h4{
+        font-size: smaller !important;
+    }
+    .top-text{
+        top: 5rem !important;
+    }
+}
+
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (min-width: 300px) and (max-width: 480px) {
     .title-h1{
         font-size: large !important;
     }
@@ -27,10 +36,8 @@
         font-size: small !important;
     }
     .top-text{
-        position: relative;
-        top: 10rem !important;
+        top: 5rem !important;
         width: 80% !important;
-        margin: 0 auto;
     }
 }
 /* Styles pour les mobiles en mode paysage */
@@ -74,39 +81,27 @@
 }
 /* Styles pour les tablettes en mode portrait */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .box-logo{
-        top: -2rem !important;
-        left: 0px !important;
-        width: 10rem;
-        margin-top: 0rem !important;
-        margin-left: 1rem !important;
-    }
-
-    .logo {
-    background-image: url("../img/logoTablet.png");
-    }
-
     .logo:hover {
         transform: scale(1.1);
         transition: 0.4s ease-in;
     }
     .title-h1{
-        font-size: x-large !important;
+        font-size: xxx-large !important;
     }
     .title-h2{
-        font-size: large !important;
+        font-size: x-large !important;
     }
 
     .title-h3{
-        font-size: large !important;
+        font-size: x-large !important;
     }
 
     .title-h4{
-        font-size: large !important;
+        font-size: x-large !important;
     }
     .top-text{
         position: relative;
-        top: 2rem !important;
+        top: 5rem !important;
         width: 80% !important;
         margin: 0 auto;
     }
@@ -206,6 +201,26 @@ body{
     background: #001007;
 }
 
+header{
+    position: fixed;
+    top: 0vh;
+    width: 100vw;
+    height: 10vh;
+}
+
+main{
+    position: relative;
+    top: 20vh;
+    width: 100vw;
+}
+
+footer{
+    position: fixed;
+    top: 94vh;
+    width: 100vw !important;
+    height: 6vh;
+}
+
 .aInfo{
     color: #FFB400 !important;
 }
@@ -267,7 +282,7 @@ body{
 /*  Titres  */
 .title-h1{
     position: absolute;
-    top: 5rem;
+    top: -1rem;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Spline Sans Mono', monospace;
@@ -325,4 +340,9 @@ body{
 .spanBoldYellow{
     color: #FFB400 !important;
     font-weight: 600;
+}
+.textNoWrap{
+    white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
+    overflow: hidden; /* Masque le texte qui dépasse */
+    text-overflow: ellipsis; /* Ajoute les points de suspension (...) pour indiquer la troncature */
 }
