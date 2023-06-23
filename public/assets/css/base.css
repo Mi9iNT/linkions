@@ -108,21 +108,6 @@
 }
 /* Styles pour les tablettes en mode paysage et ordinateurs portables */
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
-    .box-logo{
-        top: -2rem !important;
-        left: -20px !important;
-        width: 10rem;
-        margin-top: 0rem !important;
-        margin-left: 1rem !important;
-    }
-
-    .logo {
-    background-image: url("../img/logoTablet.png");
-    }
-    .logo:hover {
-        transform: scale(1.1);
-        transition: 0.4s ease-in;
-    }
     .title-h1{
         font-size: x-large !important;
     }

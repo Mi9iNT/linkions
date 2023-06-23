@@ -65,6 +65,6 @@
 		{% if app.request.cookies.has('cookie_consent') and app.request.cookies.get('cookie_consent') == 'true' %}
 			{# Inclure le script de suivi de Google Analytics ici #}
 			<script src="{{ asset('assets/js/analytics.js') }}"></script>
-		{% endblock %}
-	</html>
-</html></body></html></html>
+		{% endif %}
+	{% endblock %}
+</html></html></body></html></html>

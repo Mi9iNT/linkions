@@ -72,7 +72,7 @@
 /* Styles pour les tablettes en mode portrait */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .slider {
-        top: 25rem !important;
+        top: 6rem !important;
     }
     .card-user{
         height: 22rem !important;
@@ -81,7 +81,7 @@
     }
     .prev-btn,
     .next-btn {
-        top: 130% !important;
+        top: 80% !important;
         font-size: 100px !important;
     }
     .prev-btn {
@@ -92,7 +92,7 @@
         right: 5px !important;
     }
     .dots {
-        top: 60rem !important;
+        top: 38rem !important;
     }
 }
 /* Styles pour les tablettes en mode paysage et ordinateurs portables */
@@ -116,7 +116,7 @@
         right: 25px !important;
     }
     .dots {
-        top: 41rem !important;
+        top: 35rem !important;
     }
 }
 /* Styles pour les ordinateurs de bureau */
