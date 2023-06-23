@@ -64,15 +64,7 @@
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0X22SJMP1"></script>
 		{% if app.request.cookies.has('cookie_consent') and app.request.cookies.get('cookie_consent') == 'true' %}
 			{# Inclure le script de suivi de Google Analytics ici #}
-			<script>
-				window.dataLayer = window.dataLayer || [];
-function gtag() {
-dataLayer.push(arguments);
-}
-gtag('js', new Date());
-
-gtag('config', 'G-Z0X22SJMP1');
-			</script>
+			<script src="{{ asset('assets/js/analytics.js') }}"></script>
 		{% endblock %}
 	</html>
 </html></body></html></html>
