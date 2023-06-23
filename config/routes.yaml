@@ -137,6 +137,10 @@ app_super_admin_remove_role_admin:
   controller: 'App\Controller\SuperAdminController::removeAdminRole'
   methods: GET|POST
 
+app_cookie_consent:
+  path: /consentement/{consent}
+  controller: App\Controller\ConsentementController::cookiesConsent
+
 app_register:
   path: /inscription
   controller: 'App\Controller\SecurityController::register'

@@ -87,6 +87,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetMdp = null;
 
+    #[ORM\OneToOne(mappedBy: 'userConsent', cascade: ['persist', 'remove'])]
+    private ?Consent $consent = null;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -447,6 +450,28 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetMdp(?string $resetMdp): static
     {
         $this->resetMdp = $resetMdp;
+
+        return $this;
+    }
+
+    public function getConsent(): ?Consent
+    {
+        return $this->consent;
+    }
+
+    public function setConsent(?Consent $consent): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($consent === null && $this->consent !== null) {
+            $this->consent->setUserConsent(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($consent !== null && $consent->getUserConsent() !== $this) {
+            $consent->setUserConsent($this);
+        }
+
+        $this->consent = $consent;
 
         return $this;
     }

@@ -9,13 +9,13 @@
 			{% block title %}linkiOns
 			{% endblock %}
 		</title>
-		<link rel="icon" href="{{ asset('assets/img/favicon.png') }} ">
-
+		<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }} ">
 
 		{% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/404.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css">
+			<link rel="stylesheet" href="{{ asset('assets/css/consentement.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/utilisateurs.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/membre.css') }}" type="text/css">
 			<link rel="stylesheet" href="{{ asset('assets/css/slider.css') }}" type="text/css">
@@ -45,11 +45,16 @@
 		class="container">
 		{# read and display all flash messages #}
 		{% block body %}{% endblock %}
+		{% include'coockies/consentement.html.twig' %}
 	</main>
-	<footer>{% include'layout/footer.html.twig' %}</footer>
+	<footer>
+
+		{% include'layout/footer.html.twig' %}
+	</footer>
 
 
 	{% block javascript %}
+
 		<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('assets/js/menu.js') }}"></script>
 		<script src="{{ asset('assets/js/slider.js') }}"></script>
@@ -57,14 +62,17 @@
 		<script src="{{ asset('assets/js/boutonCoulissant.js') }}"></script>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0X22SJMP1"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
+		{% if app.request.cookies.has('cookie_consent') and app.request.cookies.get('cookie_consent') == 'true' %}
+			{# Inclure le script de suivi de Google Analytics ici #}
+			<script>
+				window.dataLayer = window.dataLayer || [];
 function gtag() {
 dataLayer.push(arguments);
 }
 gtag('js', new Date());
 
 gtag('config', 'G-Z0X22SJMP1');
-		</script>
-	{% endblock %}
+			</script>
+		{% endblock %}
+	</html>
 </html></body></html></html>

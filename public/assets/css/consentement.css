@@ -1,0 +1,31 @@
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (min-width: 100px) and (max-width: 299px) {}
+/* Styles pour les petits écrans (mobiles en mode portrait) */
+@media screen and (min-width: 300px) and (max-width: 480px) {}
+/* Styles pour les mobiles en mode paysage */
+@media screen and (min-width: 481px) and (max-width: 767px) {}
+/* Styles pour les tablettes en mode portrait */
+@media screen and (min-width: 768px) and (max-width: 1023px) {}
+/* Styles pour les tablettes en mode paysage et ordinateurs portables */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {}
+/* Styles pour les ordinateurs de bureau */
+@media screen and (min-width: 1440px) and (max-width: 1679px) {}
+/* Styles pour les grands écrans (ordinateurs de bureau et téléviseurs) */
+@media screen and (min-width: 1680px) {}
+.boxConsent{
+    position: fixed;
+    z-index: 1;
+    bottom: 1rem;
+    left: 50%;
+    transform: translate(-50%);
+    background: #184A2D;
+    padding: 2rem;
+    border-radius: 20px 20px 20px 20px;
+    border: solid 3px #FFB400;
+    box-shadow: 0 2px 4px #FFB400;
+}
+
+.consentBtn{
+    border-top: solid 3px #FFB400;
+    padding-top: 2rem;
+}

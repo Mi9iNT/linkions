@@ -1,0 +1,88 @@
+{% if app.user %}
+	{# Utilisateur connecté #}
+	{% if not app.request.cookies.has('cookie_consent') %}
+		<div class="boxConsent">
+			{# Fichier de cookie inexistant, afficher le formulaire de consentement #}
+			{# Informations nécessaires pour aider l'utilisateur à faire son choix #}
+				<p>
+					<span class="spanBoldYellow"> LinkiOns</span>
+				utilise
+				<span class="spanBoldYellow">Google Analytics</span>
+				qui fait une collecte sur les données suivantes :
+			</p>
+			<ul>
+				<li>
+					<p class="textNoWrap">-Le nombre d'<span class="spanBoldYellow">utilisateur</span>
+						de l'application,</p>
+				</li>
+				<li>
+					<p class="textNoWrap">-Les
+						<span class="spanBoldYellow">statistiques</span>
+						de
+						<span class="spanBoldYellow">session</span>
+						(page visitée, formulaire utilisé, bouton cliqué, etc.),</p>
+				</li>
+				<li>
+					<p class="textNoWrap">-Votre
+						<span class="spanBoldYellow">position géographique</span>
+						approximative (Géolocalisation),</p>
+				</li>
+				<li>
+					<p class="textNoWrap">-Des informations sur votre
+						<span class="spanBoldYellow">navigateur</span>
+						et l'<span class="spanBoldYellow">appareil</span>
+						que vous utilisez.</p>
+				</li>
+			</ul>
+			{# Boutons de consentement avec les classes de Bootstrap #}
+			<div class="d-flex justify-content-around consentBtn">
+				<a href="{{ path('app_cookie_consent', {'consent': 'true'}) }}" class="btn btn-yellow-medium ms1">Accepter</a>
+				<a href="{{ path('app_cookie_consent', {'consent': 'false'}) }}" class="btn btn-red-medium ms1">Refuser</a>
+			</div>
+		</div>
+	{% endif %}
+{% else %}
+	{# Utilisateur non connecté #}
+	{% if not app.request.cookies.has('cookie_consent') %}
+		<div class="boxConsent">
+			{# Fichier de cookie inexistant, afficher le formulaire de consentement #}
+
+			{# Informations nécessaires pour aider l'utilisateur à faire son choix #}
+				<p>
+					<span class="spanBoldYellow"> LinkiOns</span>
+				utilise
+				<span class="spanBoldYellow">Google Analytics</span>
+				qui fait une collecte sur les données suivantes :
+			</p>
+			<ul>
+				<li>
+					<p class="textNoWrap">-Le nombre d'<span class="spanBoldYellow">utilisateur</span>
+						de l'application,</p>
+				</li>
+				<li>
+					<p class="textNoWrap">-Les
+						<span class="spanBoldYellow">statistiques</span>
+						de
+						<span class="spanBoldYellow">session</span>
+						(page visitée, formulaire utilisé, bouton cliqué, etc.),</p>
+				</li>
+				<li>
+					<p class="textNoWrap">-Votre
+						<span class="spanBoldYellow">position géographique</span>
+						approximative (Géolocalisation),</p>
+				</li>
+				<li>
+					<p class="textNoWrap">-Des informations sur votre
+						<span class="spanBoldYellow">navigateur</span>
+						et l'<span class="spanBoldYellow">appareil</span>
+						que vous utilisez.</p>
+				</li>
+			</ul>
+			{# Boutons de consentement avec les classes de Bootstrap #}
+			<div class="d-flex justify-content-around consentBtn">
+				<a href="{{ path('app_cookie_consent', {'consent': 'true'}) }}" class="btn btn-yellow-medium ms1">Accepter</a>
+				<a href="{{ path('app_cookie_consent', {'consent': 'false'}) }}" class="btn btn-red-medium ms1">Refuser</a>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}

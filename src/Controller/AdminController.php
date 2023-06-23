@@ -20,7 +20,7 @@ class AdminController extends AbstractController
         $user = $this->getUser();
 
         if (!$user || !in_array('ROLE_ADMIN', $user->getRoles())) {
-            $request->getSession()->getFlashBag()->add('warning', '🛑 Vous n\'avez pas les habilitées nécessaires pour accéder à ce contenu.');
+            $this->addFlash('warning', '🛑 Vous n\'avez pas les habilitées nécessaires pour accéder à ce contenu.');
             return $this->redirectToRoute('app_index');
         }
 
