@@ -194,9 +194,11 @@ class EmailController extends AbstractController
         $entityManager = $doctrine->getManager();
         $userRepository = $entityManager->getRepository(Users::class);
 
-        $currentUser = $userRepository->find($user);
+        if ($user) {
+            $currentUser = $userRepository->find($user);
+            $username = $currentUser->getUsername();
+        }
 
-        $username = $currentUser->getUsername();
         ####### Formulaire de Contact #######
         $sendEmailForm = $this->createFormBuilder()
             ->add('to', EmailType::class, [

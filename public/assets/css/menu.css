@@ -353,6 +353,16 @@
 }
 /* Styles pour les ordinateurs de bureau */
 @media screen and (min-width: 1440px) and (max-width: 1679px) {
+    .box-logo{
+        top: 0rem;
+        left: -65px !important;
+        margin-top: 0rem !important;
+        margin-left: 1rem !important;
+    }
+    .logo:hover {
+        transform: scale(1.1);
+        transition: 0.4s ease-in;
+    }
     .logo{
         left: 8rem !important;
     }
